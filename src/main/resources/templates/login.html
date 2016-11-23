@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf tutorial: exercise 12</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<h1>Thymeleaf tutorial - Answer for exercise 12: forms</h1>
+<h2>Customer edition</h2>
+<!--
+    Set the action attribute to "/exercise12/saveCustomer.html", and use
+    th:object to bind the ${customer} variable as the form-backing bean.
+-->
+<form class="todo-form"
+      action="/"
+      method="post">
+
+    <h1 class="todo-title">Login</h1>
+
+    <input type="text"
+           name="username"
+           placeholder="Username"/>
+
+    <input type="password"
+           name="password"
+           placeholder="Password"/>
+
+    <button type="submit">Login</button>
+</form>
+</body>
+</html>

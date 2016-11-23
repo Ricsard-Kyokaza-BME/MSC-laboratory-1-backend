@@ -3,7 +3,7 @@
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="hu.bme.msc.agiletool.AgileToolApplication" />
     <option name="ALTERNATIVE_JRE_PATH" />
-    <module name="backend_main" />
+    <module name="MSC-laboratory-1-backend_main" />
     <envs />
     <method />
   </configuration>

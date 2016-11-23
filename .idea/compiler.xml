@@ -21,6 +21,8 @@
     <bytecodeTargetLevel>
       <module name="backend_main" target="1.8" />
       <module name="backend_test" target="1.8" />
+      <module name="MSC-laboratory-1-backend_main" target="1.8" />
+      <module name="MSC-laboratory-1-backend_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
