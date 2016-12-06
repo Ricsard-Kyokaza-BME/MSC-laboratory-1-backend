@@ -12,7 +12,7 @@ public abstract class BacklogItem {
     private String id;
 
     private String              title;
-    private Date                creationDate;
+    private Date                createDate;
     private ArrayList<String>   keywords;
     private String              description;
     private ArrayList<User>     assignee;
@@ -23,9 +23,9 @@ public abstract class BacklogItem {
 
     public BacklogItem() { }
 
-    public BacklogItem(String title, Date creationDate, ArrayList<String> keywords, String description, ArrayList<User> assignee, Complexity complexity, ArrayList<BacklogItem> depending, BacklogStatus status) {
+    public BacklogItem(String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<User> assignee, Complexity complexity, ArrayList<BacklogItem> depending, BacklogStatus status) {
         this.title = title;
-        this.creationDate = creationDate;
+        this.createDate = createDate;
         this.keywords = keywords;
         this.description = description;
         this.assignee = assignee;
@@ -50,12 +50,12 @@ public abstract class BacklogItem {
         this.title = title;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public ArrayList<String> getKeywords() {
@@ -111,7 +111,7 @@ public abstract class BacklogItem {
         return "BacklogItem{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", creationDate=" + creationDate +
+                ", createDate=" + createDate +
                 ", keywords=" + keywords +
                 ", description='" + description + '\'' +
                 ", assignee=" + assignee +
