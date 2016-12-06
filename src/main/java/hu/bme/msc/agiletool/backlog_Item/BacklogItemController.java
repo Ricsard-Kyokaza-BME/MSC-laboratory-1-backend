@@ -3,6 +3,7 @@ package hu.bme.msc.agiletool.backlog_Item;
 import hu.bme.msc.agiletool.model.BacklogItem;
 import hu.bme.msc.agiletool.model.Bug;
 import hu.bme.msc.agiletool.repository.BugRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class BacklogItemController {
         {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
+        bug.setId(new ObjectId().toString());
         bugRepository.save(bug);
         return new ResponseEntity<Bug>(bug,HttpStatus.OK);
     }
