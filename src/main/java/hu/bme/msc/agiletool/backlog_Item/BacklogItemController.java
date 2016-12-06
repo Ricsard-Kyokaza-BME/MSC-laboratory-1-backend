@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -204,5 +205,20 @@ public class BacklogItemController {
         bugRepository.delete(id);
         return new ResponseEntity<>(id,HttpStatus.OK);
     }
+
+
+
+    @RequestMapping(value = "/backlog-item", method = RequestMethod.GET)
+    @ResponseBody
+    Map<String, List> getBug() {
+        Map<String, List> allItem = new HashMap<>();
+        allItem.put("userStory", userStoryRepository.findAll());
+        allItem.put("task", taskRepository.findAll());
+        allItem.put("bug", bugRepository.findAll());
+        return allItem;
+    }
+
+
+
 
 }
