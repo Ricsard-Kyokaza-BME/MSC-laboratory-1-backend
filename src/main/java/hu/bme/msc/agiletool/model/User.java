@@ -87,6 +87,10 @@ public class User {
         this.roles = roles;
     }
 
+    public String getFullName(){
+        return getFirstName() + getLastName();
+    }
+
     @Override
     public String toString() {
         return String.format(

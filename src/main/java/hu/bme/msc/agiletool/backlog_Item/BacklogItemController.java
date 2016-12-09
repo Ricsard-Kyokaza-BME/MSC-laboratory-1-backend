@@ -4,21 +4,26 @@ import hu.bme.msc.agiletool.model.*;
 import hu.bme.msc.agiletool.repository.BugRepository;
 import hu.bme.msc.agiletool.repository.TaskRepository;
 import hu.bme.msc.agiletool.repository.UserStoryRepository;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class BacklogItemController {
     @Autowired
     private UserStoryRepository userStoryRepository;
@@ -30,7 +35,27 @@ public class BacklogItemController {
     private BugRepository bugRepository;
 
 
-    /**
+//    protected boolean hasRole(Enum r) {
+//        String role = r.toString();
+//        // get security context from thread local
+//        SecurityContext context = SecurityContextHolder.getContext();
+//        if (context == null)
+//            return false;
+//
+//        Authentication authentication = context.getAuthentication();
+//        if (authentication == null)
+//            return false;
+//
+//        for (GrantedAuthority auth : authentication.getAuthorities()) {
+//            if (role.equals(auth.getAuthority()))
+//                return true;
+//        }
+//
+//        return false;
+//    }
+
+
+    /** TODO Kell minden utvonalra role beírás
      * USERSTORY Features here
      * */
     @RequestMapping(value = "/userstory/{id}", method = RequestMethod.GET)
@@ -40,8 +65,12 @@ public class BacklogItemController {
     }
 
     @RequestMapping(value = "/userstory", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     List<UserStory> getAllUserStory() {
+//        String role = principal.getName();
+//        System.out.println("USER LESZ: " + hasRole(Roles.USER));
+//        System.out.println("roel:: " + role);
         return userStoryRepository.findAll();
     }
 

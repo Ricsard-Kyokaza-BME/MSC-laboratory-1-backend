@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,5 +32,20 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAll(users),HttpStatus.OK);
     }
 
+    //TODO USER Search
+    @RequestMapping(value = "/user/getUser", method = RequestMethod.POST)
+    @ResponseBody
+    ResponseEntity getUsers(@RequestBody String user) {
+        if(user == null){
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
 
+        List<User> retVal = new ArrayList<>();
+        for (User iter: userRepository.findAll()) {
+            if(iter.getFullName().contains(user)){
+                retVal.add(iter);
+            }
+        }
+        return new ResponseEntity<>(retVal,HttpStatus.OK);
+    }
 }
