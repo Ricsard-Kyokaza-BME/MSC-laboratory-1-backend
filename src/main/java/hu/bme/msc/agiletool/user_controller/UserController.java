@@ -42,7 +42,7 @@ public class UserController {
 
         List<User> retVal = new ArrayList<>();
         for (User iter: userRepository.findAll()) {
-            if(iter.getFullName().contains(user)){
+            if(iter.getFullName().toUpperCase().contains(user.toUpperCase())){
                 retVal.add(iter);
             }
         }
