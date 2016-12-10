@@ -1,6 +1,7 @@
 package hu.bme.msc.agiletool.user_controller;
 
 import hu.bme.msc.agiletool.model.User;
+import hu.bme.msc.agiletool.model.UserSearchRequest;
 import hu.bme.msc.agiletool.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,14 +36,14 @@ public class UserController {
     //TODO USER Search
     @RequestMapping(value = "/user/getUser", method = RequestMethod.POST)
     @ResponseBody
-    ResponseEntity getUsers(@RequestBody String user) {
-        if(user == null){
+    ResponseEntity getUsers(@RequestBody UserSearchRequest searchRequest) {
+        if(searchRequest == null){
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
 
         List<User> retVal = new ArrayList<>();
         for (User iter: userRepository.findAll()) {
-            if(iter.getFullName().toUpperCase().contains(user.toUpperCase())){
+            if(iter.getFullName().toUpperCase().contains(searchRequest.getKeyword().toUpperCase())){
                 retVal.add(iter);
             }
         }

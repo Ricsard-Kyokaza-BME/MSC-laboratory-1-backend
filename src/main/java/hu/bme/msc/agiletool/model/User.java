@@ -1,5 +1,6 @@
 package hu.bme.msc.agiletool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.data.annotation.Id;
@@ -16,6 +17,8 @@ public class User {
     private String lastName;
     private String username;
     private String email;
+
+    @JsonIgnore
     private String password;
 
     private List<GrantedAuthority> roles;
