@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,33 +60,32 @@ public class BacklogItemController {
      * USERSTORY Features here
      * */
     @RequestMapping(value = "/userstory/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     BacklogItem getUserStory(@PathVariable("id") String id) {
         return userStoryRepository.findOne(id);
     }
 
     @RequestMapping(value = "/userstory", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     List<UserStory> getAllUserStory() {
-//        String role = principal.getName();
-//        System.out.println("USER LESZ: " + hasRole(Roles.USER));
-//        System.out.println("roel:: " + role);
         return userStoryRepository.findAll();
     }
 
     @RequestMapping(value = "/userstory/find", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity findUserStories(@RequestBody List<String> stories) {
         if (stories == null){
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
-
 //        userStoryRepository.findAll(stories);
         return new ResponseEntity<>(userStoryRepository.findAll(stories),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/userstory", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO')")
     @ResponseBody
     ResponseEntity addUserStory(@RequestBody UserStory userStory) {
         if (userStory == null){
@@ -97,6 +97,7 @@ public class BacklogItemController {
     }
 
     @RequestMapping(value = "/userstory/{id}", method = RequestMethod.PUT)
+    @PreAuthorize("hasAnyAuthority('PO')")
     @ResponseBody
     ResponseEntity updateUserStory(@PathVariable("id") String id, @RequestBody UserStory userStory) {
         if (userStory == null || id.isEmpty())
@@ -108,6 +109,7 @@ public class BacklogItemController {
     }
 
     @RequestMapping(value = "/userstory/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAnyAuthority('PO')")
     @ResponseBody
     ResponseEntity deleteUserStory(@PathVariable("id") String id) {
         if (id.isEmpty())
@@ -124,18 +126,21 @@ public class BacklogItemController {
      * TASK Features are here
      * */
     @RequestMapping(value = "/task/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     BacklogItem getTask(@PathVariable("id") String id) {
         return taskRepository.findOne(id);
     }
 
     @RequestMapping(value = "/task", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     List<Task> getAllTask() {
         return taskRepository.findAll();
     }
 
     @RequestMapping(value = "/task/find", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity findTasks(@RequestBody List<String> tasks) {
         if (tasks == null){
@@ -145,6 +150,7 @@ public class BacklogItemController {
     }
 
     @RequestMapping(value = "/task", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity addTask(@RequestBody Task task) {
         if (task == null){
@@ -156,6 +162,7 @@ public class BacklogItemController {
     }
 
     @RequestMapping(value = "/task/{id}", method = RequestMethod.PUT)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity updateTask(@PathVariable("id") String id, @RequestBody Task task) {
         if (task == null || id.isEmpty()){
@@ -166,6 +173,7 @@ public class BacklogItemController {
     }
 
     @RequestMapping(value = "/task/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity deleteTask(@PathVariable("id") String id) {
         if (id.isEmpty())
@@ -180,18 +188,21 @@ public class BacklogItemController {
      * BUG Features are here
      * */
     @RequestMapping(value = "/bug/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     BacklogItem getBug(@PathVariable("id") String id) {
         return bugRepository.findOne(id);
     }
 
     @RequestMapping(value = "/bug", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     List<Bug> getAllBugs() {
         return bugRepository.findAll();
     }
 
     @RequestMapping(value = "/bug/find", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity findBugs(@RequestBody List<String> bugs) {
         if (bugs == null){
@@ -202,8 +213,9 @@ public class BacklogItemController {
 
 
     @RequestMapping(value = "/bug", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
-    ResponseEntity addBacklogItem(@RequestBody Bug bug) {
+    ResponseEntity addBug(@RequestBody Bug bug) {
         if (bug == null)
         {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -214,8 +226,9 @@ public class BacklogItemController {
     }
 
     @RequestMapping(value = "/bug/{id}", method = RequestMethod.PUT)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
-    ResponseEntity updateTask(@PathVariable("id") String id, @RequestBody Bug bug) {
+    ResponseEntity updateBug(@PathVariable("id") String id, @RequestBody Bug bug) {
         if (bug == null || id.isEmpty())
         {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -225,6 +238,7 @@ public class BacklogItemController {
     }
 
     @RequestMapping(value = "/bug/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity deleteBug(@PathVariable("id") String id) {
         if (id.isEmpty())
@@ -238,6 +252,7 @@ public class BacklogItemController {
 
 
     @RequestMapping(value = "/backlog-item", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     Map<String, List> getBug() {
         Map<String, List> allItem = new HashMap<>();

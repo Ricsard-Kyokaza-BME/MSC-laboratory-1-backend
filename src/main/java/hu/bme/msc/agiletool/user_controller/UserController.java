@@ -33,7 +33,6 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAll(users),HttpStatus.OK);
     }
 
-    //TODO USER Search
     @RequestMapping(value = "/user/getUser", method = RequestMethod.POST)
     @ResponseBody
     ResponseEntity getUsers(@RequestBody UserSearchRequest searchRequest) {
