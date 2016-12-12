@@ -280,26 +280,28 @@ public class BacklogItemController {
         subMap.put("todo", new ArrayList<>());
         subMap.put("inProgress", new ArrayList<>());
         subMap.put("done", new ArrayList<>());
-        for(BacklogItem item : items) {
-            switch (item.getStatus()) {
-                case BACKLOG:
-                    subMap.get("backlog").add(item);
-                    break;
-                case TODO:
-                    subMap.get("todo").add(item);
-                    break;
-                case IN_PROGRESS:
-                    subMap.get("inProgress").add(item);
-                    break;
-                case DONE:
-                    subMap.get("done").add(item);
-                    break;
-                default:
-                    break;
+        if(items != null) {
+            for(BacklogItem item : items) {
+                switch (item.getStatus()) {
+                    case BACKLOG:
+                        subMap.get("backlog").add(item);
+                        break;
+                    case TODO:
+                        subMap.get("todo").add(item);
+                        break;
+                    case IN_PROGRESS:
+                        subMap.get("inProgress").add(item);
+                        break;
+                    case DONE:
+                        subMap.get("done").add(item);
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
 
-        target.put(subTarget, subMap);
+            target.put(subTarget, subMap);
+        }
     }
 
 }
