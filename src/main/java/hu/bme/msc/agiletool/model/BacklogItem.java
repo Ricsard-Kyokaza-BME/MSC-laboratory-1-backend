@@ -15,15 +15,14 @@ public abstract class BacklogItem {
     private Date                createDate;
     private ArrayList<String>   keywords;
     private String              description;
-    private ArrayList<User>     assignee;
+    private ArrayList<String>     assignee;
     private Complexity          complexity;
-    private ArrayList<BacklogItem> depending;
+    private ArrayList<String> depending;
     private BacklogStatus       status;
-
 
     public BacklogItem() { }
 
-    public BacklogItem(String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<User> assignee, Complexity complexity, ArrayList<BacklogItem> depending, BacklogStatus status) {
+    public BacklogItem(String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status) {
         this.title = title;
         this.createDate = createDate;
         this.keywords = keywords;
@@ -74,11 +73,11 @@ public abstract class BacklogItem {
         this.description = description;
     }
 
-    public ArrayList<User> getAssignee() {
+    public ArrayList<String> getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(ArrayList<User> assignee) {
+    public void setAssignee(ArrayList<String> assignee) {
         this.assignee = assignee;
     }
 
@@ -90,11 +89,11 @@ public abstract class BacklogItem {
         this.complexity = complexity;
     }
 
-    public ArrayList<BacklogItem> getDepending() {
+    public ArrayList<String> getDepending() {
         return depending;
     }
 
-    public void setDepending(ArrayList<BacklogItem> depending) {
+    public void setDepending(ArrayList<String> depending) {
         this.depending = depending;
     }
 

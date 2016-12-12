@@ -1,6 +1,7 @@
 package hu.bme.msc.agiletool.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Task extends AbstractTask{
     private ArrayList<String>   history;
@@ -9,7 +10,8 @@ public class Task extends AbstractTask{
     public Task() {
     }
 
-    public Task(ArrayList<String> history, ArrayList<String> progressInfo) {
+    public Task(String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, ArrayList<String> history, ArrayList<String> progressInfo) {
+        super(title, createDate, keywords, description, assignee, complexity, depending, status);
         this.history = history;
         this.progressInfo = progressInfo;
     }
