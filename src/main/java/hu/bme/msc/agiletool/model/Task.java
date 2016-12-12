@@ -10,8 +10,8 @@ public class Task extends AbstractTask{
     public Task() {
     }
 
-    public Task(String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, ArrayList<String> history, ArrayList<String> progressInfo) {
-        super(title, createDate, keywords, description, assignee, complexity, depending, status);
+    public Task(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, ArrayList<String> history, ArrayList<String> progressInfo) {
+        super(id, title, createDate, keywords, description, assignee, complexity, depending, status, BacklogItemType.TASK);
         this.history = history;
         this.progressInfo = progressInfo;
     }

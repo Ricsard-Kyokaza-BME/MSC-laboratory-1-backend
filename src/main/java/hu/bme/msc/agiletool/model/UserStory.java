@@ -13,8 +13,8 @@ public class UserStory extends BacklogItem {
     public UserStory() {
     }
 
-    public UserStory(String title, Date creationDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, ArrayList<AbstractTask> subtasks, String definitionOfDone, String acceptanceCriteria) {
-        super(title, creationDate, keywords, description, assignee, complexity, depending, status);
+    public UserStory(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, ArrayList<AbstractTask> subtasks, String definitionOfDone, String acceptanceCriteria) {
+        super(id, title, createDate, keywords, description, assignee, complexity, depending, status, BacklogItemType.USER_STORY);
         this.subtasks = subtasks;
         this.definitionOfDone = definitionOfDone;
         this.acceptanceCriteria = acceptanceCriteria;

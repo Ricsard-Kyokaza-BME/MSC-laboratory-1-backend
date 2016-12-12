@@ -11,18 +11,20 @@ public abstract class BacklogItem {
     @Id
     private String id;
 
-    private String              title;
-    private Date                createDate;
-    private ArrayList<String>   keywords;
-    private String              description;
+    private String                title;
+    private Date                  createDate;
+    private ArrayList<String>     keywords;
+    private String                description;
     private ArrayList<String>     assignee;
-    private Complexity          complexity;
-    private ArrayList<String> depending;
-    private BacklogStatus       status;
+    private Complexity            complexity;
+    private ArrayList<String>     depending;
+    private BacklogStatus         status;
+    private BacklogItemType       type;
 
     public BacklogItem() { }
 
-    public BacklogItem(String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status) {
+    public BacklogItem(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, BacklogItemType type) {
+        this.id = id;
         this.title = title;
         this.createDate = createDate;
         this.keywords = keywords;
@@ -31,6 +33,7 @@ public abstract class BacklogItem {
         this.complexity = complexity;
         this.depending = depending;
         this.status = status;
+        this.type = type;
     }
 
     public String getId() {
@@ -105,6 +108,14 @@ public abstract class BacklogItem {
         this.status = status;
     }
 
+    public BacklogItemType getType() {
+        return type;
+    }
+
+    public void setType(BacklogItemType type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "BacklogItem{" +
@@ -117,6 +128,7 @@ public abstract class BacklogItem {
                 ", complexity=" + complexity +
                 ", depending=" + depending +
                 ", status=" + status +
+                ", type=" + type +
                 '}';
     }
 }
