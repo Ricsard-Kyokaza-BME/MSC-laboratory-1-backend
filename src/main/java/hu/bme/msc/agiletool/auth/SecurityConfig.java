@@ -40,7 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .csrf().disable();
-
+/*TODO /app-ot át kell írni, hogy http://balogott.... ha deven vagyunk
+*   TODO local hoston meg local host.
+* */
 //        http
 //                .authorizeRequests()
 //                    .antMatchers("/resources/**").permitAll()

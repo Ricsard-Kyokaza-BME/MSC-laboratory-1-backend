@@ -4,21 +4,14 @@ import hu.bme.msc.agiletool.model.*;
 import hu.bme.msc.agiletool.repository.BugRepository;
 import hu.bme.msc.agiletool.repository.TaskRepository;
 import hu.bme.msc.agiletool.repository.UserStoryRepository;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +29,10 @@ public class BacklogItemController {
     private BugRepository bugRepository;
 
 
+
+    /**
+     * TODO Legyen elkülönítve a dev meg a production environment. Ki kell venni 2 ppropertybe a teljes elérési útvonalat.
+     * */
 //    protected boolean hasRole(Enum r) {
 //        String role = r.toString();
 //        // get security context from thread local
