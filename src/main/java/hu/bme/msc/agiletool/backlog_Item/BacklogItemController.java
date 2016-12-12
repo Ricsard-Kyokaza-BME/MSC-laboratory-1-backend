@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -259,7 +260,46 @@ public class BacklogItemController {
         return allItem;
     }
 
+    @RequestMapping(value = "/backlog-item/by-status", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
+    @ResponseBody
+    Map<String, Map<String, List<BacklogItem>>> getBacklogItemsByStatus() {
+        Map<String, Map<String, List<BacklogItem>>> allItem = new HashMap<>();
+        mapByStatus(userStoryRepository.findAll(), allItem, "userStory");
+        mapByStatus(taskRepository.findAll(), allItem, "task");
+        mapByStatus(bugRepository.findAll(), allItem, "bug");
 
+        return allItem;
+    }
 
+    private void mapByStatus(List<? extends BacklogItem> items,
+                             Map<String, Map<String, List<BacklogItem>>> target,
+                             String subTarget) {
+        Map<String, List<BacklogItem>> subMap = new HashMap<>();
+        subMap.put("backlog", new ArrayList<>());
+        subMap.put("todo", new ArrayList<>());
+        subMap.put("inProgress", new ArrayList<>());
+        subMap.put("done", new ArrayList<>());
+        for(BacklogItem item : items) {
+            switch (item.getStatus()) {
+                case BACKLOG:
+                    subMap.get("backlog").add(item);
+                    break;
+                case TODO:
+                    subMap.get("todo").add(item);
+                    break;
+                case IN_PROGRESS:
+                    subMap.get("inProgress").add(item);
+                    break;
+                case DONE:
+                    subMap.get("done").add(item);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        target.put(subTarget, subMap);
+    }
 
 }
