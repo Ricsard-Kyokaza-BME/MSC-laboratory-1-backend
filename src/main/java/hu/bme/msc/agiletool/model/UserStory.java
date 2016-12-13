@@ -6,25 +6,25 @@ import java.util.Map;
 
 public class UserStory extends BacklogItem {
 
-    private ArrayList<AbstractTask> subtasks;
+    private ArrayList<String> subtasks;
     private String                  definitionOfDone;
     private String                  acceptanceCriteria;
 
     public UserStory() {
     }
 
-    public UserStory(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, ArrayList<AbstractTask> subtasks, String definitionOfDone, String acceptanceCriteria) {
+    public UserStory(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, ArrayList<String> subtasks, String definitionOfDone, String acceptanceCriteria) {
         super(id, title, createDate, keywords, description, assignee, complexity, depending, status, BacklogItemType.USER_STORY);
         this.subtasks = subtasks;
         this.definitionOfDone = definitionOfDone;
         this.acceptanceCriteria = acceptanceCriteria;
     }
 
-    public ArrayList<AbstractTask> getSubtasks() {
+    public ArrayList<String> getSubtasks() {
         return subtasks;
     }
 
-    public void setSubtasks(ArrayList<AbstractTask> subtasks) {
+    public void setSubtasks(ArrayList<String> subtasks) {
         this.subtasks = subtasks;
     }
 
