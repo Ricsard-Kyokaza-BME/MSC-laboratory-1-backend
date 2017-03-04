@@ -17,6 +17,7 @@
 *.ipr
 .idea/workspace.xml
 .idea/sonarlint
+.idea/gradle.xml
 
 ### NetBeans ###
 nbproject/private/
