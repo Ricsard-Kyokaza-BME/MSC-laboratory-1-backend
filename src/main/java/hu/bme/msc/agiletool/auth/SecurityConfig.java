@@ -26,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                .antMatchers("/resources/**").permitAll()
                 .antMatchers("/resources/**", "/is-signed-in").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -40,25 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .csrf().disable();
-/*TODO /app-ot át kell írni, hogy http://balogott.... ha deven vagyunk
-*   TODO local hoston meg local host.
-* */
-//        http
-//                .authorizeRequests()
-//                    .antMatchers("/resources/**").permitAll()
-//                    .anyRequest().authenticated()
-//                    .and()
-//                .formLogin()
-//                    .loginPage("/login")
-//                    .permitAll()
-//                    .and()
-//                .csrf().disable();
-
-//        http.formLogin().defaultSuccessUrl("/resource")
-//                .and().logout().and().authorizeRequests()
-//                .antMatchers("/index.html", "/home.html", "/login.html", "/", "/access", "/logout").permitAll().anyRequest()
-//                .authenticated()
-//                .and().csrf().disable();
     }
 
     @Autowired
