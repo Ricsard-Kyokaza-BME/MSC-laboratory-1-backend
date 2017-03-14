@@ -1,4 +1,4 @@
-package hu.bme.msc.agiletool.backlog_Item.controllerForBug;
+package hu.bme.msc.agiletool.controller.controllerForBug;
 
 import hu.bme.msc.agiletool.model.BacklogItem;
 import hu.bme.msc.agiletool.model.Bug;
@@ -30,7 +30,9 @@ public class BugController {
     @RequestMapping(value = "/bug", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
-    List<Bug> getAllBugs() {
+    public List<Bug> getAllBugs() {
+        System.out.println(bugRepository);
+        System.out.println(bugRepository.findAll());
         return bugRepository.findAll();
     }
 
@@ -81,4 +83,14 @@ public class BugController {
         bugRepository.delete(id);
         return new ResponseEntity<>(id,HttpStatus.OK);
     }
+
+    public BugRepository getBugRepository() {
+        return bugRepository;
+    }
+
+    public void setBugRepository(BugRepository bugRepository) {
+        this.bugRepository = bugRepository;
+    }
+
+    public BugController() {}
 }

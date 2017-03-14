@@ -1,13 +1,10 @@
-package hu.bme.msc.agiletool.backlog_Item;
+package hu.bme.msc.agiletool.controller;
 
 import hu.bme.msc.agiletool.model.*;
 import hu.bme.msc.agiletool.repository.BugRepository;
 import hu.bme.msc.agiletool.repository.TaskRepository;
 import hu.bme.msc.agiletool.repository.UserStoryRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
