@@ -15,7 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MongoDBAuthenticationProvider authenticationProvider;
 
-    @Value("${app.successurl}")
+    @Value("${app.host}")
     private String successUrl;
 
     @Override
@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/")
-                .defaultSuccessUrl(successUrl, true)
+                .defaultSuccessUrl(successUrl + "/app", true)
                 .failureUrl("/")
                 .permitAll()
                 .and()
