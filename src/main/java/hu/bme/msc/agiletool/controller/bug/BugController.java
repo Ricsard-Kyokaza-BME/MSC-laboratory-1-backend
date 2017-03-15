@@ -1,4 +1,4 @@
-package hu.bme.msc.agiletool.controller.controllerForBug;
+package hu.bme.msc.agiletool.controller.bug;
 
 import hu.bme.msc.agiletool.model.BacklogItem;
 import hu.bme.msc.agiletool.model.Bug;

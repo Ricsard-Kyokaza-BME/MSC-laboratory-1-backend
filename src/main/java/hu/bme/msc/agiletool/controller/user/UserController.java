@@ -1,4 +1,4 @@
-package hu.bme.msc.agiletool.controller.controllerForUser;
+package hu.bme.msc.agiletool.controller.user;
 
 import hu.bme.msc.agiletool.model.User;
 import hu.bme.msc.agiletool.model.UserSearchRequest;

@@ -1,4 +1,4 @@
-package hu.bme.msc.agiletool.controller.controllerForTask;
+package hu.bme.msc.agiletool.controller.task;
 
 
 import hu.bme.msc.agiletool.model.BacklogItem;

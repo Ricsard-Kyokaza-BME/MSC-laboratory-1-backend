@@ -1,4 +1,4 @@
-package hu.bme.msc.agiletool.controller.controllerForUserStory;
+package hu.bme.msc.agiletool.controller.userstory;
 
 import hu.bme.msc.agiletool.model.BacklogItem;
 import hu.bme.msc.agiletool.model.UserStory;
