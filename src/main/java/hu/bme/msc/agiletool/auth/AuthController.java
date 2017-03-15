@@ -15,10 +15,4 @@ public class AuthController {
         return "login";
     }
 
-    @RequestMapping(value = "/is-signed-in", method = RequestMethod.GET)
-    @ResponseBody
-    Principal isSignedIn(Principal principal) {
-        return principal;
-    }
-
 }

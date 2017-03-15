@@ -9,12 +9,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api")
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class BacklogItemController {
 
@@ -78,6 +80,12 @@ public class BacklogItemController {
 
             target.put(subTarget, subMap);
         }
+    }
+
+    @RequestMapping(value = "/is-signed-in", method = RequestMethod.GET)
+    @ResponseBody
+    Principal isSignedIn(Principal principal) {
+        return principal;
     }
 
 }
