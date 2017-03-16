@@ -17,6 +17,7 @@ public interface UserRepository extends MongoRepository<User, String> {
     User        findByUsername(@Param("username") String username);
 
     List<User>  findByFullNameContainingIgnoreCase(@Param("keyword") String keyword);
+    List<User>  findByFullName(@Param("keyword") String keyword);
 
 
 }
