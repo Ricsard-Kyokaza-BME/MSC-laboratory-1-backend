@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
@@ -105,7 +106,7 @@ public class UserMethod extends Preconditioning {
     }
 
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void fetchingUserByFirstNameOrLastName() throws Exception {
         result = mvc.perform(
                 get("/api/user/search/findByFirstNameOrLastName?firstName=John&lastName=Smith").
@@ -121,8 +122,7 @@ public class UserMethod extends Preconditioning {
                 getJSONObject("_embedded").
                 getJSONArray("user").length();
 
-        if(userCountFromResponse >= 2) throw new RuntimeException("Everything is ok");
-
+        assertEquals(Integer.valueOf(2), userCountFromResponse);
     }
 
 
