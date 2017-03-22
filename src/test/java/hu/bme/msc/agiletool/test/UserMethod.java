@@ -6,9 +6,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
+import static org.assertj.core.api.filter.NotFilter.not;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
@@ -86,7 +89,7 @@ public class UserMethod extends Preconditioning {
     @Test
     public void fetchingUserById() throws Exception {
         fetchingUserByLastName();
-        JSONObject jsonObject = new JSONObject(result.getResponse().getContentAsString());
+        JSONObject jsonObject = jsonParse(result);
         String userUriFromResponse = jsonObject.
                 getJSONObject("_embedded").
                 getJSONArray("user").
@@ -106,16 +109,25 @@ public class UserMethod extends Preconditioning {
     }
 
 
-//    @Test
-//    public void fetchingUserByFullNameContainingIgnoreCase() throws Exception {
-//        result = mvc.perform(
-//                get("/api/user/search/findByFullName?keyword=JohnDoe").
-////                        with(user(testUserAlice)).
-//                        accept(MediaTypes.HAL_JSON)).
-////                andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
-////                andExpect(status().isOk()).
-//                andDo(print()).
-//                andReturn();
-//    }
+    @Test(expected = RuntimeException.class)
+    public void fetchingUserByFirstNameOrLastName() throws Exception {
+        result = mvc.perform(
+                get("/api/user/search/findByFirstNameOrLastName?firstName=John&lastName=Smith").
+                        with(user(testUserAlice)).
+                        accept(MediaTypes.HAL_JSON)).
+                andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
+                andExpect(status().isOk()).
+                andDo(print()).
+                andReturn();
+
+        JSONObject jsonObject = jsonParse(result);
+        Integer userCountFromResponse = jsonObject.
+                getJSONObject("_embedded").
+                getJSONArray("user").length();
+
+        if(userCountFromResponse >= 2) throw new RuntimeException("Everything is ok");
+
+    }
+
 
 }

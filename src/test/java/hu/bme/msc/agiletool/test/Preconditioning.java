@@ -1,5 +1,6 @@
 package hu.bme.msc.agiletool.test;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,5 +50,9 @@ public abstract class Preconditioning {
         generatedUser = new User(username, password, rolesToSet);
 
         return generatedUser;
+    }
+
+    JSONObject jsonParse(MvcResult res) throws UnsupportedEncodingException {
+        return new JSONObject(res.getResponse().getContentAsString());
     }
 }
