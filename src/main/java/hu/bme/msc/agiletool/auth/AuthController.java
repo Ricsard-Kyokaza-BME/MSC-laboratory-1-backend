@@ -16,7 +16,7 @@ public class AuthController {
     }
 
 
-    @RequestMapping(value = "/is-signed-in", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/is-signed-in", method = RequestMethod.GET)
     @ResponseBody
     Principal isSignedIn(Principal principal) {
         return principal;
