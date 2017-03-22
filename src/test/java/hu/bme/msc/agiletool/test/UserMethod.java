@@ -151,7 +151,7 @@ public class UserMethod extends Preconditioning {
         String payload = "{  \"firstName\" : \"ricsi\",  \"lastName\" : \"balog\" }";
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
+        headers.set(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE);
 //        headers.set(HttpHeaders.AUTHORIZATION, "Basic " + new String(Base64.encode(("ollie:gierke").getBytes())));
 
 
