@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@EnableGlobalMethodSecurity(prePostEnabled=true)
-public class UserStoryController {
-
-    @Autowired
-    private UserStoryRepository userStoryRepository;
+//@RestController
+//@EnableGlobalMethodSecurity(prePostEnabled=true)
+//public class UserStoryController {
+//
+//    @Autowired
+//    private UserStoryRepository userStoryRepository;
 
 //    @RequestMapping(value = "/userstory/{id}", method = RequestMethod.GET)
 //    @PreAuthorize("hasAnyAuthority('PO','USER')")
@@ -72,4 +72,4 @@ public class UserStoryController {
 //        userStoryRepository.delete(id);
 //        return new ResponseEntity<>(id,HttpStatus.OK);
 //    }
-}
+//}

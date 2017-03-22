@@ -28,17 +28,13 @@ public class MongoDBAuthenticationProvider extends AbstractUserDetailsAuthentica
         try {
             hu.bme.msc.agiletool.model.User user = users.findByUsername(username);
             userDetail = new User(user.getUsername(), user.getPassword(), user.getRoles());
-            if(!user.getPassword().equals(authentication.getCredentials())) {
+            if (!user.getPassword().equals(authentication.getCredentials())) {
                 throw new BadCredentialsException("Invalid password");
             }
         } catch (Exception repositoryProblem) {
             throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);
         }
 
-        if (userDetail == null) {
-            throw new InternalAuthenticationServiceException(
-                    "UserDetailsService returned null, which is an interface contract violation");
-        }
         return userDetail;
     }
 }

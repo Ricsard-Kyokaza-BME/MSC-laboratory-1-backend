@@ -6,8 +6,8 @@ import java.util.Date;
 public class UserStory extends BacklogItem {
 
     private ArrayList<String> subtasks;
-    private String                  definitionOfDone;
-    private String                  acceptanceCriteria;
+    private String definitionOfDone;
+    private String acceptanceCriteria;
 
     public UserStory() {
     }

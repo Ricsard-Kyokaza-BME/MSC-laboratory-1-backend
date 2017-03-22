@@ -1,10 +1,12 @@
 package hu.bme.msc.agiletool.repository;
 
+import hu.bme.msc.agiletool.model.BacklogStatus;
 import hu.bme.msc.agiletool.model.UserStory;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -13,6 +15,15 @@ import java.util.List;
 public interface UserStoryRepository extends MongoRepository<UserStory, String> {
 
     List<UserStory> findById(@RequestBody List<String> userstoryIds);
+
+    //Part of the BacklogItem abstract class. Need some smart work on it.
+    //Not nice to write it on every type.
+    UserStory findByTitle(@RequestParam String title);
+    List<UserStory> findByKeywordsContaining(@RequestParam List<String> keywords);
+    List<UserStory> findByAssigneeContaining(@RequestParam List<String> assignee);
+    List<UserStory> findByDependingContaining(@RequestParam List<String> depending);
+    List<UserStory> findByStatus(@RequestParam BacklogStatus status);
+
 
     @Override
     @PreAuthorize("hasAuthority('PO')")
