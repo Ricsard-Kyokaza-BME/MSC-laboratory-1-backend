@@ -2,7 +2,6 @@ package hu.bme.msc.agiletool.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 
 public class UserStory extends BacklogItem {
 
