@@ -87,7 +87,8 @@ public class UserMethod extends Preconditioning {
     @Test
     public void fetchingUserByLastName() throws Exception {
         result = mvc.perform(
-                get("/api/user/search/findByLastName?lastName=Doe").
+                get("/api/user/search/findByLastName").
+                        param("lastName", "Doe").
                         with(user(testUserKazi)).
                         accept(MediaTypes.HAL_JSON)).
                 andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
