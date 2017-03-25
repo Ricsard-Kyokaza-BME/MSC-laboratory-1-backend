@@ -142,23 +142,14 @@ public class UserMethod extends Preconditioning {
 
     @Test
     public void postUserToCollectionResource() throws Exception {
-
-        //List<GrantedAuthority> roles = new ArrayList<>();
-        //roles.add(new SimpleGrantedAuthority("PO"));
-        //roles.add(new SimpleGrantedAuthority("USER"));
-        //User ricsi = new User("ricsi", "balog", "ricsi", null, "ricsi", roles );
-//        org.springframework.security.core.userdetails.User ricsi = generateTestUser("ricsi", "ricsi", "PO", "USER");
         String payload = "{  \"firstName\" : \"ricsi\",  \"lastName\" : \"balog\" }";
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE);
-//        headers.set(HttpHeaders.AUTHORIZATION, "Basic " + new String(Base64.encode(("ollie:gierke").getBytes())));
-
 
         mvc.perform(post("/api/user").
                 with(user(testUserKazi)).
                 with(csrf()).
-//                content(ricsi.toString()).
                 content(payload).
                 headers(headers)).
                 andExpect(status().isCreated()).
