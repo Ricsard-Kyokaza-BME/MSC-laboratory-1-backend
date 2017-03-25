@@ -3,8 +3,13 @@ package hu.bme.msc.agiletool.controller.task;
 
 import hu.bme.msc.agiletool.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @EnableGlobalMethodSecurity(prePostEnabled=true)
@@ -27,15 +32,15 @@ public class TaskController {
 //        return taskRepository.findAll();
 //    }
 //
-//    @RequestMapping(value = "/task/find", method = RequestMethod.POST)
-//    @PreAuthorize("hasAnyAuthority('PO','USER')")
-//    @ResponseBody
-//    ResponseEntity findTasks(@RequestBody List<String> tasks) {
-//        if (tasks == null){
-//            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<>(taskRepository.findAll(tasks),HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/api/task/find", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
+    @ResponseBody
+    ResponseEntity findTasks(@RequestBody List<String> tasks) {
+        if (tasks == null){
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(taskRepository.findAll(tasks),HttpStatus.OK);
+    }
 //
 //    @RequestMapping(value = "/task", method = RequestMethod.POST)
 //    @PreAuthorize("hasAnyAuthority('PO','USER')")

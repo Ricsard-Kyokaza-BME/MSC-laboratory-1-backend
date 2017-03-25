@@ -2,15 +2,20 @@ package hu.bme.msc.agiletool.controller.userstory;
 
 import hu.bme.msc.agiletool.repository.UserStoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-//@RestController
-//@EnableGlobalMethodSecurity(prePostEnabled=true)
-//public class UserStoryController {
-//
-//    @Autowired
-//    private UserStoryRepository userStoryRepository;
+import java.util.List;
+
+@RestController
+@EnableGlobalMethodSecurity(prePostEnabled=true)
+public class UserStoryController {
+
+    @Autowired
+    private UserStoryRepository userStoryRepository;
 
 //    @RequestMapping(value = "/userstory/{id}", method = RequestMethod.GET)
 //    @PreAuthorize("hasAnyAuthority('PO','USER')")
@@ -18,25 +23,25 @@ import org.springframework.web.bind.annotation.RestController;
 //    BacklogItem getUserStory(@PathVariable("id") String id) {
 //        return userStoryRepository.findOne(id);
 //    }
-//
+
 //    @RequestMapping(value = "/userstory", method = RequestMethod.GET)
 //    @PreAuthorize("hasAnyAuthority('PO','USER')")
 //    @ResponseBody
 //    List<UserStory> getAllUserStory() {
 //        return userStoryRepository.findAll();
 //    }
-//
-//    @RequestMapping(value = "/userstory/find", method = RequestMethod.POST)
-//    @PreAuthorize("hasAnyAuthority('PO','USER')")
-//    @ResponseBody
-//    ResponseEntity findUserStories(@RequestBody List<String> stories) {
-//        if (stories == null){
-//            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-//        }
-////        userStoryRepository.findAll(stories);
-//        return new ResponseEntity<>(userStoryRepository.findAll(stories),HttpStatus.OK);
-//    }
-//
+
+    @RequestMapping(value = "/api/userstory/find", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
+    @ResponseBody
+    ResponseEntity findUserStories(@RequestBody List<String> stories) {
+        if (stories == null){
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+//        userStoryRepository.findAll(stories);
+        return new ResponseEntity<>(userStoryRepository.findAll(stories),HttpStatus.OK);
+    }
+
 //    @RequestMapping(value = "/userstory", method = RequestMethod.POST)
 //    @PreAuthorize("hasAnyAuthority('PO')")
 //    @ResponseBody
@@ -48,7 +53,7 @@ import org.springframework.web.bind.annotation.RestController;
 //        userStoryRepository.save(userStory);
 //        return new ResponseEntity<>(userStory,HttpStatus.OK);
 //    }
-//
+
 //    @RequestMapping(value = "/userstory/{id}", method = RequestMethod.PUT)
 //    @PreAuthorize("hasAnyAuthority('PO')")
 //    @ResponseBody
@@ -60,7 +65,7 @@ import org.springframework.web.bind.annotation.RestController;
 //        userStoryRepository.save(userStory);
 //        return new ResponseEntity<>(userStory,HttpStatus.OK);
 //    }
-//
+
 //    @RequestMapping(value = "/userstory/{id}", method = RequestMethod.DELETE)
 //    @PreAuthorize("hasAnyAuthority('PO')")
 //    @ResponseBody
@@ -72,4 +77,4 @@ import org.springframework.web.bind.annotation.RestController;
 //        userStoryRepository.delete(id);
 //        return new ResponseEntity<>(id,HttpStatus.OK);
 //    }
-//}
+}

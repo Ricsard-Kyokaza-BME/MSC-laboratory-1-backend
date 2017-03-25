@@ -2,8 +2,13 @@ package hu.bme.msc.agiletool.controller.bug;
 
 import hu.bme.msc.agiletool.repository.BugRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @EnableGlobalMethodSecurity(prePostEnabled=true)
@@ -28,16 +33,16 @@ public class BugController {
 //        return bugRepository.findAll();
 //    }
 //
-//    @RequestMapping(value = "/bug/find", method = RequestMethod.POST)
-//    @PreAuthorize("hasAnyAuthority('PO','USER')")
-//    @ResponseBody
-//    ResponseEntity findBugs(@RequestBody List<String> bugs) {
-//        if (bugs == null){
-//            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<>(bugRepository.findAll(bugs),HttpStatus.OK);
-//    }
-//
+    @RequestMapping(value = "/api/bug/find", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
+    @ResponseBody
+    ResponseEntity findBugs(@RequestBody List<String> bugs) {
+        if (bugs == null){
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(bugRepository.findAll(bugs),HttpStatus.OK);
+    }
+
 //
 //    @RequestMapping(value = "/bug", method = RequestMethod.POST)
 //    @PreAuthorize("hasAnyAuthority('PO','USER')")
