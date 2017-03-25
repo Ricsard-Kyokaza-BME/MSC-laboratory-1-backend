@@ -12,6 +12,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,15 +23,27 @@ public class UserStoryMethod extends Preconditioning {
     @Test
     public void fetchingAllDataFromUserStory() throws Exception {
         result = mvc.perform(
-                get("/api/userstory/search").
+                get("/api/userstory").
                         with(user(testUserAlice)).
                         with(csrf()).
                         accept(MediaTypes.HAL_JSON)).
                 andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
                 andExpect(status().isOk()).
-                andDo(log()).
+                andDo(print()).
                 andReturn();
     }
+//    @Test
+//    public void asd() throws Exception {
+//        result = mvc.perform(
+//                get("/api/userstory/58d66332f624775baa852611").
+//                        with(user(testUserAlice)).
+//                        with(csrf()).
+//                        accept(MediaTypes.HAL_JSON)).
+//                andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
+//                andExpect(status().isOk()).
+//                andDo(print()).
+//                andReturn();
+//    }
 
     @Test
     public void postUserStoryToCollectionResource() throws Exception {
@@ -93,6 +106,6 @@ public class UserStoryMethod extends Preconditioning {
                 with(csrf()).
                 headers(headers)).
                 andExpect(status().isOk()).
-                andDo(log());
+                andDo(print());
     }
 }
