@@ -106,11 +106,14 @@ public class UserStoryMethod extends Preconditioning {
 //                andDo(print()).
 //                andReturn();
 
-        mvc.perform(get("/api/userstory/"+b).
+        System.out.println(b);
+        System.out.println(b.substring(3,4));
+
+        mvc.perform(get("/api/userstory/search/findByTitleContainingIgnoreCase?title=ST").
                 with(user(testUserKazi)).
                 with(csrf()).
                 headers(headers)).
-                andExpect(status().isOk()).
+//                andExpect(status().isOk()).
                 andDo(print());
     }
 }
