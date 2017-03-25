@@ -18,7 +18,8 @@
 .idea/workspace.xml
 .idea/sonarlint
 .idea/gradle.xml
-.idea/libraries/org_thymeleaf_thymeleaf_Release.xml
+.idea/kotlinc.xml
+.idea/libraries/
 
 ### NetBeans ###
 nbproject/private/
