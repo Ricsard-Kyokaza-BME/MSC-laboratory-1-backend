@@ -11,7 +11,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,7 +28,7 @@ public class UserStoryMethod extends Preconditioning {
                         accept(MediaTypes.HAL_JSON)).
                 andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
                 andExpect(status().isOk()).
-                andDo(print()).
+                andDo(log()).
                 andReturn();
     }
 
@@ -46,7 +46,7 @@ public class UserStoryMethod extends Preconditioning {
                 content(payload1).
                 headers(headers)).
                 andExpect(status().isCreated()).
-                andDo(print());
+                andDo(log());
 
         mvc.perform(post("/api/userstory").
                 with(user(testUserKazi)).
@@ -54,7 +54,7 @@ public class UserStoryMethod extends Preconditioning {
                 content(payload2).
                 headers(headers)).
                 andExpect(status().isCreated()).
-                andDo(print());
+                andDo(log());
 
     }
 
@@ -73,7 +73,7 @@ public class UserStoryMethod extends Preconditioning {
                 content(payload1).
                 headers(headers)).
                 andExpect(status().isCreated()).
-                andDo(print()).
+                andDo(log()).
                 andReturn();
         String a = result.getResponse().getHeader("Location").replaceAll("http://.*/api/userstory/", "");
 
@@ -83,37 +83,16 @@ public class UserStoryMethod extends Preconditioning {
                 content(payload2).
                 headers(headers)).
                 andExpect(status().isCreated()).
-                andDo(print()).
+                andDo(log()).
                 andReturn();
         String b = result.getResponse().getHeader("Location").replaceAll("http://.*/api/userstory/", "");
 
-//        JSONObject asd = new JSONObject();
-//        List<String> alma = new ArrayList<>();
-//        alma.add(a);
-//        alma.add(b);
-//        JSONObject qqq = new JSONObject();
-//        qqq.append("userstoryIds", alma);
-//        asd.append("data", qqq);
-        //"userstoryIds=" + a +","+bs
-//        result = mvc.perform(
-//                post("").
-//                        with(user(testUserAlice)).
-//                        with(csrf()).
-//                        content(" \"userstoryIds\" : \"1\"").
-//                        accept(MediaTypes.HAL_JSON)).
-////                andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
-////                andExpect(status().isOk()).
-//                andDo(print()).
-//                andReturn();
-
-        System.out.println(b);
-        System.out.println(b.substring(3,4));
 
         mvc.perform(get("/api/userstory/search/findByTitleContainingIgnoreCase?title=ST").
                 with(user(testUserKazi)).
                 with(csrf()).
                 headers(headers)).
-//                andExpect(status().isOk()).
-                andDo(print());
+                andExpect(status().isOk()).
+                andDo(log());
     }
 }

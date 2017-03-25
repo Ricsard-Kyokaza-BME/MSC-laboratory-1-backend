@@ -38,7 +38,6 @@ public class UserStoryController {
         if (stories == null){
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
-//        userStoryRepository.findAll(stories);
         return new ResponseEntity<>(userStoryRepository.findAll(stories),HttpStatus.OK);
     }
 
