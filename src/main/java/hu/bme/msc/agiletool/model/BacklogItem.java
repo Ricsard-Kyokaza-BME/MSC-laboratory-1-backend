@@ -9,7 +9,7 @@ import java.util.Date;
 public abstract class BacklogItem {
 
     @Id
-    private String id;
+    private String Id;
 
     private String                title;
     private Date                  createDate;
@@ -24,7 +24,7 @@ public abstract class BacklogItem {
     public BacklogItem() { }
 
     public BacklogItem(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, BacklogItemType type) {
-        this.id = id;
+        this.Id = id;
         this.title = title;
         this.createDate = createDate;
         this.keywords = keywords;
@@ -37,11 +37,11 @@ public abstract class BacklogItem {
     }
 
     public String getId() {
-        return id;
+        return Id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public String getTitle() {
@@ -119,7 +119,7 @@ public abstract class BacklogItem {
     @Override
     public String toString() {
         return "BacklogItem{" +
-                "id='" + id + '\'' +
+                "id='" + Id + '\'' +
                 ", title='" + title + '\'' +
                 ", createDate=" + createDate +
                 ", keywords=" + keywords +
