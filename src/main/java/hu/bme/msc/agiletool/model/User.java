@@ -2,6 +2,7 @@ package hu.bme.msc.agiletool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class User {
 
     private String firstName;
     private String lastName;
+    @Indexed(unique = true)
     private String username;
     private String email;
 

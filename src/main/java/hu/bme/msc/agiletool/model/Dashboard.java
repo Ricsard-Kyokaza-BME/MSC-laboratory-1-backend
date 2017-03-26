@@ -9,8 +9,6 @@ public class Dashboard {
     @Id
     private String id;
 
-    private String projectId;
-
     private Map<Integer, String> backlog;
     private Map<Integer, String> todo;
     private Map<Integer, String> inProgress;
@@ -18,9 +16,8 @@ public class Dashboard {
 
     public Dashboard(){}
 
-    public Dashboard(String id, String projectId, Map<Integer, String> backlog, Map<Integer, String> todo, Map<Integer, String> inProgress, Map<Integer, String> done) {
+    public Dashboard(String id, Map<Integer, String> backlog, Map<Integer, String> todo, Map<Integer, String> inProgress, Map<Integer, String> done) {
         this.id = id;
-        this.projectId = projectId;
         this.backlog = backlog;
         this.todo = todo;
         this.inProgress = inProgress;
@@ -33,14 +30,6 @@ public class Dashboard {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
     }
 
     public Map<Integer, String> getBacklog() {
@@ -79,7 +68,6 @@ public class Dashboard {
     public String toString() {
         return "Dashboard{" +
                 "id='" + id + '\'' +
-                ", projectId='" + projectId + '\'' +
                 ", backlog=" + backlog +
                 ", todo=" + todo +
                 ", inProgress=" + inProgress +

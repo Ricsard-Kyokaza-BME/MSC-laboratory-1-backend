@@ -9,14 +9,17 @@ public class Project {
     @Id
     private String id;
 
+    private String dashboardId;
+
     private String name;
     private String description;
     private List<String> usersInProject;
 
     public Project(){}
 
-    public Project(String id, String name, String description, List<String> usersInProject) {
+    public Project(String id, String dashboardId, String name, String description, List<String> usersInProject) {
         this.id = id;
+        this.dashboardId = dashboardId;
         this.name = name;
         this.description = description;
         this.usersInProject = usersInProject;
@@ -58,6 +61,7 @@ public class Project {
     public String toString() {
         return "Project{" +
                 "id='" + id + '\'' +
+                ", dashboardId='" + dashboardId + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", usersInProject=" + usersInProject +

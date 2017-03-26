@@ -38,16 +38,6 @@ public class DashboardController implements PredefineBaseController {
         return new ResponseEntity<>(dashboardRepository.findAll(dashboards),HttpStatus.OK);
     }
 
-    //    @RequestMapping(value = "/task/{id}", method = RequestMethod.PUT)
-//    @PreAuthorize("hasAnyAuthority('PO','USER')")
-//    @ResponseBody
-//    ResponseEntity updateTask(@PathVariable("id") String id, @RequestBody Task task) {
-//        if (task == null || id.isEmpty()){
-//            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-//        }
-//        taskRepository.save(task);
-//        return new ResponseEntity<>(task,HttpStatus.OK);
-//    }
     @RequestMapping(value = "/dashboard/{id}", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO', 'USER')")
     @ResponseBody
