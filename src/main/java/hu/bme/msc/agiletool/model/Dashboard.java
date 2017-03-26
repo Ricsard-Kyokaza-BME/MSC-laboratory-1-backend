@@ -64,6 +64,22 @@ public class Dashboard {
         this.done = done;
     }
 
+    public void addToBacklog(Integer i, String value){
+        this.backlog.put(i, value);
+    }
+
+    public void addToTodo(Integer i, String value){
+        this.todo.put(i, value);
+    }
+
+    public void addToInProgress(Integer i, String value){
+        this.inProgress.put(i, value);
+    }
+
+    public void addToDone(Integer i, String value){
+        this.done.put(i, value);
+    }
+
     @Override
     public String toString() {
         return "Dashboard{" +

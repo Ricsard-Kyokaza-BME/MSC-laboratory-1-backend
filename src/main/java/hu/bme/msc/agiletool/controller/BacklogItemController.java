@@ -52,7 +52,7 @@ public class BacklogItemController {
         return allItem;
     }
 
-    private void mapByStatus(List<? extends BacklogItem> items,
+    public static void mapByStatus(List<? extends BacklogItem> items,
                              Map<String, Map<String, List<BacklogItem>>> target,
                              String subTarget) {
         Map<String, List<BacklogItem>> subMap = new HashMap<>();
