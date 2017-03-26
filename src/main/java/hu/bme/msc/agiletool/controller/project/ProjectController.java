@@ -131,7 +131,6 @@ public class ProjectController implements PredefineBaseController {
         return allItem;
     }
 
-    //TODO A dashboard null, ha a projek ujonnan van létrehozva. Need to FIX
     @RequestMapping(value = "/project", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
@@ -139,7 +138,13 @@ public class ProjectController implements PredefineBaseController {
         if(projectFromRequest == null){
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
-        projectRepository.save(projectFromRequest);
+        if(!projectFromRequest.getDashboardId().isEmpty()){
+            projectRepository.save(projectFromRequest);
+        }else {
+            Dashboard d = dashboardRepository.save(new Dashboard());
+            projectFromRequest.setDashboardId(d.getId());
+            projectRepository.save(projectFromRequest);
+        }
         Project project = projectRepository.findOne(projectFromRequest.getId());
 
         for (String iterInProjectUserIds : project.getUsersInProject()) {
