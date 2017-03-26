@@ -20,16 +20,18 @@ public class User {
     private String password;
 
     private List<GrantedAuthority> roles;
+    private List<String> projects;
 
     public User() {}
 
-    public User(String firstName, String lastName, String username, String email, String password, List<GrantedAuthority> roles) {
+    public User(String firstName, String lastName, String username, String email, String password, List<GrantedAuthority> roles, List<String> projects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.projects = projects;
     }
 
     public String getId() {
@@ -92,11 +94,31 @@ public class User {
         return getFirstName() + " " + getLastName();
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "User[id=%s, firstName='%s', lastName='%s', username='%s', email='%s']",
-                id, firstName, lastName, username, email);
+    public List<String> getProjects() {
+        return projects;
     }
 
+    public void setProjects(List<String> projects) {
+        this.projects = projects;
+    }
+
+//    @Override
+//    public String toString() {
+//        return String.format(
+//                "User[id=%s, firstName='%s', lastName='%s', username='%s', email='%s', proje]",
+//                id, firstName, lastName, username, email);
+//    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", projects=" + projects +
+                '}';
+    }
 }
