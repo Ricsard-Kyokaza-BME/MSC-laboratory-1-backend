@@ -1,5 +1,6 @@
 package hu.bme.msc.agiletool.controller.user;
 
+import hu.bme.msc.agiletool.controller.PredefineBaseController;
 import hu.bme.msc.agiletool.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class UserController {
+public class UserController implements PredefineBaseController {
 
     @Autowired
     private UserRepository userRepository;
@@ -31,7 +32,7 @@ public class UserController {
 //        return new ResponseEntity<>(retVal,HttpStatus.OK);
 //    }
 
-    @RequestMapping(value = "/api/user/find", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/find", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity findUsersByIds(@RequestBody List<String> users) {

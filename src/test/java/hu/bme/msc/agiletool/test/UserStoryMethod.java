@@ -7,6 +7,8 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -107,5 +109,27 @@ public class UserStoryMethod extends Preconditioning {
                 headers(headers)).
                 andExpect(status().isOk()).
                 andDo(print());
+    }
+
+
+    @Test
+    public void preformPostToFetchListOfUserStory() throws Exception {
+        ArrayList<String> asd = new ArrayList<>();
+        asd.add("58d65b5df6247753c0c110a2");
+        asd.add("58d65b5df6247753c0c110a3");
+        String payload = asd.toString();
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE);
+
+        result = mvc.perform(post("/api/userstory/find").
+                with(user(testUserKazi)).
+                with(csrf()).
+                content(payload).
+                headers(headers)).
+//                andExpect(status().isCreated()).
+                andDo(print()).
+                andReturn();
     }
 }

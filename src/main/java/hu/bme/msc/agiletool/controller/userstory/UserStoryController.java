@@ -1,5 +1,6 @@
 package hu.bme.msc.agiletool.controller.userstory;
 
+import hu.bme.msc.agiletool.controller.PredefineBaseController;
 import hu.bme.msc.agiletool.repository.UserStoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @EnableGlobalMethodSecurity(prePostEnabled=true)
-public class UserStoryController {
+public class UserStoryController implements PredefineBaseController{
 
     @Autowired
     private UserStoryRepository userStoryRepository;
@@ -31,7 +32,7 @@ public class UserStoryController {
 //        return userStoryRepository.findAll();
 //    }
 
-    @RequestMapping(value = "/api/userstory/find", method = RequestMethod.POST)
+    @RequestMapping(value = "/userstory/find", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity findUserStories(@RequestBody List<String> stories) {

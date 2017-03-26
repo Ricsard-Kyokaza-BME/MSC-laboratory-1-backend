@@ -1,6 +1,7 @@
 package hu.bme.msc.agiletool.controller.task;
 
 
+import hu.bme.msc.agiletool.controller.PredefineBaseController;
 import hu.bme.msc.agiletool.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RestController
 @EnableGlobalMethodSecurity(prePostEnabled=true)
-public class TaskController {
+public class TaskController implements PredefineBaseController {
 
     @Autowired
     private TaskRepository taskRepository;
@@ -32,7 +33,7 @@ public class TaskController {
 //        return taskRepository.findAll();
 //    }
 //
-    @RequestMapping(value = "/api/task/find", method = RequestMethod.POST)
+    @RequestMapping(value = "/task/find", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity findTasks(@RequestBody List<String> tasks) {

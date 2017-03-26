@@ -1,5 +1,6 @@
 package hu.bme.msc.agiletool.controller.bug;
 
+import hu.bme.msc.agiletool.controller.PredefineBaseController;
 import hu.bme.msc.agiletool.repository.BugRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @EnableGlobalMethodSecurity(prePostEnabled=true)
-public class BugController {
+public class BugController implements PredefineBaseController {
 
     @Autowired
     private BugRepository bugRepository;
@@ -33,7 +34,7 @@ public class BugController {
 //        return bugRepository.findAll();
 //    }
 //
-    @RequestMapping(value = "/api/bug/find", method = RequestMethod.POST)
+    @RequestMapping(value = "/bug/find", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity findBugs(@RequestBody List<String> bugs) {
