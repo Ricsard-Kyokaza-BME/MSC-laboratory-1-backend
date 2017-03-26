@@ -138,7 +138,7 @@ public class ProjectController implements PredefineBaseController {
         if(projectFromRequest == null){
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
-        if(!projectFromRequest.getDashboardId().isEmpty()){
+        if(!"".equals(projectFromRequest.getDashboardId())){
             projectRepository.save(projectFromRequest);
         }else {
             Dashboard d = dashboardRepository.save(new Dashboard());
