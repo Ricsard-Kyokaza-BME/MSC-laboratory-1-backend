@@ -1,9 +1,6 @@
 package hu.bme.msc.agiletool;
 
-import hu.bme.msc.agiletool.model.Bug;
-import hu.bme.msc.agiletool.model.Task;
-import hu.bme.msc.agiletool.model.User;
-import hu.bme.msc.agiletool.model.UserStory;
+import hu.bme.msc.agiletool.model.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
@@ -17,6 +14,8 @@ public class ExposeAllRepositoryRestConfiguration extends RepositoryRestConfigur
         config.exposeIdsFor(UserStory.class);
         config.exposeIdsFor(Task.class);
         config.exposeIdsFor(Bug.class);
+        config.exposeIdsFor(Project.class);
+        config.exposeIdsFor(Dashboard.class);
     }
 
 
