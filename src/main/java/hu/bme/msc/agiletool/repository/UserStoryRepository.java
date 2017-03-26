@@ -15,7 +15,7 @@ import java.util.List;
 @PreAuthorize("hasAnyAuthority('PO','USER')")
 public interface UserStoryRepository extends MongoRepository<UserStory, String> {
 
-    List<UserStory> findByIdContains(@Param("id") String id);
+    List<UserStory> findById(@Param("id") String id);
 
     //Part of the BacklogItem abstract class. Need some smart work on it.
     //Not nice to write it on every type.

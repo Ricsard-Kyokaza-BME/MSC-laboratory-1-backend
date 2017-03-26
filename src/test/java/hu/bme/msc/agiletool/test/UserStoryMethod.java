@@ -1,5 +1,7 @@
 package hu.bme.msc.agiletool.test;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -118,7 +120,7 @@ public class UserStoryMethod extends Preconditioning {
         asd.add("58d65b5df6247753c0c110a2");
         asd.add("58d65b5df6247753c0c110a3");
         String payload = asd.toString();
-
+        JSONArray o = new JSONArray(asd);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE);
@@ -126,9 +128,9 @@ public class UserStoryMethod extends Preconditioning {
         result = mvc.perform(post("/api/userstory/find").
                 with(user(testUserKazi)).
                 with(csrf()).
-                content(payload).
+                content(o.toString()).
                 headers(headers)).
-//                andExpect(status().isCreated()).
+                andExpect(status().isOk()).
                 andDo(print()).
                 andReturn();
     }
