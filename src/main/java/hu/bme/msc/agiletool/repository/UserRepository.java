@@ -19,7 +19,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
 //    List<User>  findByFullNameContainingIgnorCase(@Param("keyword") String keyword);
     List<User>  findByFirstNameOrLastName(@Param("firstName")String firstName, @Param("lastName")String lastName);
-    List<User>  findByFirstNameOrLastNameContainingIgnorCase(@Param("firstName")String firstName, @Param("lastName")String lastName);
+    List<User>  findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(@Param("firstName")String firstName, @Param("lastName")String lastName);
 
 
 }

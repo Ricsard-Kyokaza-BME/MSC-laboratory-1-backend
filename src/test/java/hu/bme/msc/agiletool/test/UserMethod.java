@@ -141,6 +141,25 @@ public class UserMethod extends Preconditioning {
     }
 
     @Test
+    public void fetchingUserByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase() throws Exception {
+        result = mvc.perform(
+                get("/api/user/search/findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase?firstName=oh&lastName=sm").
+                        with(user(testUserAlice)).
+                        accept(MediaTypes.HAL_JSON)).
+                andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
+                andExpect(status().isOk()).
+                andDo(print()).
+                andReturn();
+
+        JSONObject jsonObject = jsonParse(result);
+        Integer userCountFromResponse = jsonObject.
+                getJSONObject("_embedded").
+                getJSONArray("user").length();
+
+        assertEquals(Integer.valueOf(2), userCountFromResponse);
+    }
+
+    @Test
     public void postUserToCollectionResource() throws Exception {
         String payload = "{  \"firstName\" : \"ricsi\",  \"lastName\" : \"balog\" }";
 
