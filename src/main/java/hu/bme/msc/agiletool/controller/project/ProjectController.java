@@ -3,6 +3,7 @@ package hu.bme.msc.agiletool.controller.project;
 import hu.bme.msc.agiletool.controller.PredefineBaseController;
 import hu.bme.msc.agiletool.model.Dashboard;
 import hu.bme.msc.agiletool.model.Project;
+import hu.bme.msc.agiletool.model.User;
 import hu.bme.msc.agiletool.repository.DashboardRepository;
 import hu.bme.msc.agiletool.repository.ProjectRepository;
 import hu.bme.msc.agiletool.repository.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -64,15 +66,25 @@ public class ProjectController implements PredefineBaseController {
 //    }
 //
 //
-//    @RequestMapping(value = "/project/set/{id}", method = RequestMethod.POST)
-//    @PreAuthorize("hasAnyAuthority('PO','USER')")
-//    @ResponseBody
-//    ResponseEntity addProjectAndModifieUsersProject(@PathVariable("id") String userId, @RequestBody Project project){
-//        if(userId.isEmpty() || project == null){
-//            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//
-//    }
+    @RequestMapping(value = "/project", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
+    @ResponseBody
+    ResponseEntity addProjectAndModifieUsersProject(@RequestBody Project projectFromRequest){
+        if(projectFromRequest == null){
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+        projectRepository.save(projectFromRequest);
+        Project project = projectRepository.findOne(projectFromRequest.getId());
+
+        for (String iterInProjectUserIds : project.getUsersInProject()) {
+            User actualUser = userRepository.findOne(iterInProjectUserIds);
+                ArrayList<String> userProjList = actualUser.getProjects();
+                userProjList.add(project.getId());
+                actualUser.setProjects(userProjList);
+            userRepository.save(actualUser);
+        }
+
+        return new ResponseEntity<>(project,HttpStatus.OK);
+    }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -22,11 +23,11 @@ public class User {
     private String password;
 
     private List<GrantedAuthority> roles;
-    private List<String> projects;
+    private ArrayList<String> projects;
 
     public User() {}
 
-    public User(String firstName, String lastName, String username, String email, String password, List<GrantedAuthority> roles, List<String> projects) {
+    public User(String firstName, String lastName, String username, String email, String password, List<GrantedAuthority> roles, ArrayList<String> projects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -96,11 +97,11 @@ public class User {
         return getFirstName() + " " + getLastName();
     }
 
-    public List<String> getProjects() {
+    public ArrayList<String> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<String> projects) {
+    public void setProjects(ArrayList<String> projects) {
         this.projects = projects;
     }
 
