@@ -54,81 +54,41 @@ public class ProjectController implements PredefineBaseController {
         }
 
         Map<String, Map<String, List<BacklogItem>>> allItem = new HashMap<>();
-        String subTarget = null;
-
         Project project = projectRepository.findOne(projectId);
         Dashboard dashboard = dashboardRepository.findOne(project.getDashboardId());
-        //get backlog
+
         Map<Integer, String> backlogToResolve = dashboard.getBacklog();
         Map<Integer, String> todoToResolve = dashboard.getTodo();
         Map<Integer, String> inProgressToResolve = dashboard.getInprogress();
         Map<Integer, String> doneToResolve = dashboard.getDone();
 
-        ArrayList<BacklogItem> items = new ArrayList<>();
-        for (Integer i : backlogToResolve.keySet()){
-            if(userStoryRepository.findOne(backlogToResolve.get(i))!=null){
-                items.add(userStoryRepository.findOne(backlogToResolve.get(i)));
-                subTarget="userStory";
-            }else if (taskRepository.findOne(backlogToResolve.get(i))!=null){
-                items.add(taskRepository.findOne(backlogToResolve.get(i)));
-                subTarget="task";
-            }else if(bugRepository.findOne(backlogToResolve.get(i))!=null){
-                items.add(bugRepository.findOne(backlogToResolve.get(i)));
-                subTarget="bug";
-            }
+        ArrayList<BacklogItem> userstory = new ArrayList<>();
+        ArrayList<BacklogItem> bug = new ArrayList<>();
+        ArrayList<BacklogItem> task = new ArrayList<>();
 
-        }
-        for (Integer i : todoToResolve.keySet()){
-            if(userStoryRepository.findOne(todoToResolve.get(i))!=null){
-                items.add(userStoryRepository.findOne(todoToResolve.get(i)));
-                subTarget="userStory";
-            }else if (taskRepository.findOne(todoToResolve.get(i))!=null){
-                items.add(taskRepository.findOne(todoToResolve.get(i)));
-                subTarget="task";
+        iterateRepo(backlogToResolve, userstory, bug, task);
+        iterateRepo(todoToResolve, userstory, bug, task);
+        iterateRepo(inProgressToResolve, userstory, bug, task);
+        iterateRepo(doneToResolve, userstory, bug, task);
 
-            }else if(bugRepository.findOne(todoToResolve.get(i))!=null){
-                items.add(bugRepository.findOne(todoToResolve.get(i)));
-                subTarget="bug";
-
-            }
-
-        }
-        for (Integer i : inProgressToResolve.keySet()){
-            if(userStoryRepository.findOne(inProgressToResolve.get(i))!=null){
-                items.add(userStoryRepository.findOne(inProgressToResolve.get(i)));
-                subTarget="userStory";
-
-            }else if (taskRepository.findOne(inProgressToResolve.get(i))!=null){
-                items.add(taskRepository.findOne(inProgressToResolve.get(i)));
-                subTarget="task";
-
-            }else if(bugRepository.findOne(inProgressToResolve.get(i))!=null){
-                items.add(bugRepository.findOne(inProgressToResolve.get(i)));
-                subTarget="bug";
-
-            }
-
-        }
-        for (Integer i : doneToResolve.keySet()){
-            if(userStoryRepository.findOne(doneToResolve.get(i))!=null){
-                items.add(userStoryRepository.findOne(doneToResolve.get(i)));
-                subTarget="userStory";
-
-            }else if (taskRepository.findOne(doneToResolve.get(i))!=null){
-                items.add(taskRepository.findOne(doneToResolve.get(i)));
-                subTarget="task";
-
-            }else if(bugRepository.findOne(doneToResolve.get(i))!=null){
-                items.add(bugRepository.findOne(doneToResolve.get(i)));
-                subTarget="bug";
-
-            }
-
-        }
-
-            mapByStatus(items, allItem, subTarget);
+        mapByStatus(userstory, allItem, "userStory");
+        mapByStatus(task, allItem, "task");
+        mapByStatus(bug, allItem, "bug");
 
         return allItem;
+    }
+
+    private void iterateRepo(Map<Integer, String> map, ArrayList<BacklogItem> userstory, ArrayList<BacklogItem> bug,
+                             ArrayList<BacklogItem> task) {
+        for (Integer i : map.keySet()){
+            if(userStoryRepository.findOne(map.get(i))!=null){
+                userstory.add(userStoryRepository.findOne(map.get(i)));
+            }else if (taskRepository.findOne(map.get(i))!=null){
+                task.add(taskRepository.findOne(map.get(i)));
+            }else if(bugRepository.findOne(map.get(i))!=null){
+                bug.add(bugRepository.findOne(map.get(i)));
+            }
+        }
     }
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)

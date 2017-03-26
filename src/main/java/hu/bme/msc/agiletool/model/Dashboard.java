@@ -2,6 +2,7 @@ package hu.bme.msc.agiletool.model;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Dashboard {
@@ -14,7 +15,12 @@ public class Dashboard {
     private Map<Integer, String> inProgress;
     private Map<Integer, String> done;
 
-    public Dashboard(){}
+    public Dashboard(){
+        backlog = new HashMap<>();
+        todo = new HashMap<>();
+        inProgress = new HashMap<>();
+        done = new HashMap<>();
+    }
 
     public Dashboard(String id, Map<Integer, String> backlog, Map<Integer, String> todo, Map<Integer, String> inProgress, Map<Integer, String> done) {
         this.id = id;
