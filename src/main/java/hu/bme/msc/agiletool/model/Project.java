@@ -33,6 +33,14 @@ public class Project {
         this.id = id;
     }
 
+    public String getDashboardId() {
+        return dashboardId;
+    }
+
+    public void setDashboardId(String dashboardId) {
+        this.dashboardId = dashboardId;
+    }
+
     public String getName() {
         return name;
     }
