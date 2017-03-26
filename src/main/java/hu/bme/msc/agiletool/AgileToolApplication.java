@@ -29,17 +29,17 @@ public class AgileToolApplication implements CommandLineRunner {
 
 		List<GrantedAuthority> aliceRoles = new ArrayList<>();
 		aliceRoles.add(new SimpleGrantedAuthority("USER"));
-		repository.save(new User("Alice", "Smith", "alice", "a@a.com", "abcd", aliceRoles, null));
+		repository.save(new User("Alice", "Smith", "alice", "a@a.com", "abcd", aliceRoles, new ArrayList<>()));
 
 		List<GrantedAuthority> johnRoles = new ArrayList<>();
 		johnRoles.add(new SimpleGrantedAuthority("PO"));
 		johnRoles.add(new SimpleGrantedAuthority("USER"));
-		repository.save(new User("John", "Doe", "john", "b@b.com", "abcd", johnRoles, null));
+		repository.save(new User("John", "Doe", "john", "b@b.com", "abcd", johnRoles, new ArrayList<>()));
 
 		List<GrantedAuthority> kaziRoles = new ArrayList<>();
 		kaziRoles.add(new SimpleGrantedAuthority("PO"));
 		kaziRoles.add(new SimpleGrantedAuthority("USER"));
-		repository.save(new User("Kazi", "Marci", "kazi", "kazi@gmail.com.com", "kazi", kaziRoles, null));
+		repository.save(new User("Kazi", "Marci", "kazi", "kazi@gmail.com.com", "kazi", kaziRoles, new ArrayList<>()));
 
 	}
 }
