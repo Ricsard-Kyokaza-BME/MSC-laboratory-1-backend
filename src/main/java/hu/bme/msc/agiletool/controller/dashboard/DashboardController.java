@@ -37,6 +37,7 @@ public class DashboardController implements PredefineBaseController {
         }
         return new ResponseEntity<>(dashboardRepository.findAll(dashboards),HttpStatus.OK);
     }
+    
 
     @RequestMapping(value = "/dashboard/{id}", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO', 'USER')")
