@@ -1,15 +1,17 @@
 package hu.bme.msc.agiletool.controller.dashboard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hu.bme.msc.agiletool.model.*;
-import org.json.JSONObject;
 import hu.bme.msc.agiletool.controller.PredefineBaseController;
+import hu.bme.msc.agiletool.model.Bug;
+import hu.bme.msc.agiletool.model.Dashboard;
+import hu.bme.msc.agiletool.model.Task;
+import hu.bme.msc.agiletool.model.UserStory;
 import hu.bme.msc.agiletool.repository.BugRepository;
 import hu.bme.msc.agiletool.repository.DashboardRepository;
 import hu.bme.msc.agiletool.repository.TaskRepository;
 import hu.bme.msc.agiletool.repository.UserStoryRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
