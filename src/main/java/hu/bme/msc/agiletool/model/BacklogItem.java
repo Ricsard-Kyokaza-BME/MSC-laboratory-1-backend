@@ -1,11 +1,13 @@
 package hu.bme.msc.agiletool.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class BacklogItem {
 
     @Id

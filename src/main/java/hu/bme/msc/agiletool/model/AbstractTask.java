@@ -1,8 +1,11 @@
 package hu.bme.msc.agiletool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractTask extends BacklogItem {
 
     public AbstractTask() {
