@@ -2,7 +2,9 @@ package hu.bme.msc.agiletool.auth;
 
 import hu.bme.msc.agiletool.model.User;
 import hu.bme.msc.agiletool.repository.UserRepository;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +26,9 @@ public class AuthController {
     @RequestMapping(value = "/api/is-signed-in", method = RequestMethod.GET)
     @ResponseBody
     User isSignedIn(Principal principal) {
+        if (principal == null){
+            return null;
+        }
         return userRepository.findByUsername(principal.getName());
     }
 

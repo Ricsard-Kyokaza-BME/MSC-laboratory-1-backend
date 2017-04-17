@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -62,9 +61,8 @@ public class DashboardController implements PredefineBaseController {
         }
 
         Dashboard dashboard = dashboardRepository.findOne(dashboardId);
-        Map<Integer, String> adding = dashboard.getBacklog();
-
-        if (adding == null) {
+//        Map<Integer, String> adding = dashboard.getBacklog();
+        if (dashboard == null) {
             throw new RuntimeException("Getting dashboard from path variable failed.");
         }
 
@@ -73,31 +71,78 @@ public class DashboardController implements PredefineBaseController {
             UserStory UserStoryRawObject = mapper.readValue(backlogItem, UserStory.class);
             UserStory userStory = userStoryRepository.save(UserStoryRawObject);
 
-            if (UserStoryRawObject.getId().isEmpty()){
-                adding.put(dashboard.getBacklog().size() + 1, userStory.getId());
+            if(jObjBacklogItem.has("id")) {
+                dashboard.removeItem(userStory.getId());
             }
-            dashboard.setBacklog(adding);
+            switch (UserStoryRawObject.getStatus()){
+                case BACKLOG:
+                    dashboard.addToBacklog(userStory.getId());
+                    break;
+                case TODO:
+                    dashboard.addToTodo(userStory.getId());
+                    break;
+                case IN_PROGRESS:
+                    dashboard.addToInProgress(userStory.getId());
+                    break;
+                case DONE:
+                    dashboard.addToDone(userStory.getId());
+            }
+
+//            adding.put(dashboard.getBacklog().size() + 1, userStory.getId());
+//            dashboard.setBacklog(adding);
         }else if(jObjBacklogItem.get("type").toString().equals("1")){
             Task TaskRawObject = mapper.readValue(backlogItem, Task.class);
             Task task = taskRepository.save(TaskRawObject);
 
-            if (TaskRawObject.getId().isEmpty()){
-                adding.put(dashboard.getBacklog().size() + 1, task.getId());
+
+            if(jObjBacklogItem.has("id")) {
+                dashboard.removeItem(task.getId());
             }
-            dashboard.setBacklog(adding);
+            switch (TaskRawObject.getStatus()){
+                case BACKLOG:
+                    dashboard.addToBacklog(task.getId());
+                    break;
+                case TODO:
+                    dashboard.addToTodo(task.getId());
+                    break;
+                case IN_PROGRESS:
+                    dashboard.addToInProgress(task.getId());
+                    break;
+                case DONE:
+                    dashboard.addToDone(task.getId());
+            }
+
+//            adding.put(dashboard.getBacklog().size() + 1, task.getId());
+//            dashboard.setBacklog(adding);
         }else if(jObjBacklogItem.get("type").toString().equals("2")){
             Bug BugRawObject = mapper.readValue(backlogItem, Bug.class);
             Bug bug = bugRepository.save(BugRawObject);
 
-            if (BugRawObject.getId().isEmpty()){
-                adding.put(dashboard.getBacklog().size() + 1, bug.getId());
+            if(jObjBacklogItem.has("id")) {
+                dashboard.removeItem(bug.getId());
             }
-            dashboard.setBacklog(adding);
+            switch (BugRawObject.getStatus()){
+                case BACKLOG:
+                    dashboard.addToBacklog(bug.getId());
+                    break;
+                case TODO:
+                    dashboard.addToTodo(bug.getId());
+                    break;
+                case IN_PROGRESS:
+                    dashboard.addToInProgress(bug.getId());
+                    break;
+                case DONE:
+                    dashboard.addToDone(bug.getId());
+            }
+
+//            adding.put(dashboard.getBacklog().size() + 1, bug.getId());
+//            dashboard.setBacklog(adding);
         }else {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
 
         dashboardRepository.save(dashboard);
+        dashboard = dashboardRepository.findOne(dashboardId);
         return new ResponseEntity<>(dashboard, HttpStatus.OK);
     }
 }

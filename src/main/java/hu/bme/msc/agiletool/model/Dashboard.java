@@ -72,20 +72,56 @@ public class Dashboard {
         this.done = done;
     }
 
-    public void addToBacklog(Integer i, String value){
-        this.backlog.put(i, value);
+    public void addToBacklog(String value){
+        this.backlog.put(this.backlog.size()+1, value);
     }
 
-    public void addToTodo(Integer i, String value){
-        this.todo.put(i, value);
+    public void addToTodo(String value){
+        this.todo.put(this.todo.size()+1, value);
     }
 
-    public void addToInProgress(Integer i, String value){
-        this.inProgress.put(i, value);
+    public void addToInProgress(String value){
+        this.inProgress.put(this.inProgress.size()+1, value);
     }
 
-    public void addToDone(Integer i, String value){
-        this.done.put(i, value);
+    public void addToDone(String value){
+        this.done.put(this.done.size()+1, value);
+    }
+
+    public boolean removeItem(String id){
+        for (Map.Entry<Integer, String> e : backlog.entrySet()) {
+            Integer key = e.getKey();
+            String value = e.getValue();
+            if(value.equals(id)){
+                backlog.remove(key, value);
+                return true;
+            }
+        }
+        for (Map.Entry<Integer, String> e : todo.entrySet()) {
+            Integer key = e.getKey();
+            String value = e.getValue();
+            if(value.equals(id)){
+                todo.remove(key, value);
+                return true;
+            }
+        }
+        for (Map.Entry<Integer, String> e : inProgress.entrySet()) {
+            Integer key = e.getKey();
+            String value = e.getValue();
+            if(value.equals(id)){
+                inProgress.remove(key, value);
+                return true;
+            }
+        }
+        for (Map.Entry<Integer, String> e : done.entrySet()) {
+            Integer key = e.getKey();
+            String value = e.getValue();
+            if(value.equals(id)){
+                done.remove(key, value);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
