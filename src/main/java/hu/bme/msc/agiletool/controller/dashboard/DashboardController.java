@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -72,19 +73,25 @@ public class DashboardController implements PredefineBaseController {
             UserStory UserStoryRawObject = mapper.readValue(backlogItem, UserStory.class);
             UserStory userStory = userStoryRepository.save(UserStoryRawObject);
 
-            adding.put(dashboard.getBacklog().size() + 1, userStory.getId());
+            if (UserStoryRawObject.getId().isEmpty()){
+                adding.put(dashboard.getBacklog().size() + 1, userStory.getId());
+            }
             dashboard.setBacklog(adding);
         }else if(jObjBacklogItem.get("type").toString().equals("1")){
             Task TaskRawObject = mapper.readValue(backlogItem, Task.class);
             Task task = taskRepository.save(TaskRawObject);
 
-            adding.put(dashboard.getBacklog().size() + 1, task.getId());
+            if (TaskRawObject.getId().isEmpty()){
+                adding.put(dashboard.getBacklog().size() + 1, task.getId());
+            }
             dashboard.setBacklog(adding);
         }else if(jObjBacklogItem.get("type").toString().equals("2")){
             Bug BugRawObject = mapper.readValue(backlogItem, Bug.class);
             Bug bug = bugRepository.save(BugRawObject);
 
-            adding.put(dashboard.getBacklog().size() + 1, bug.getId());
+            if (BugRawObject.getId().isEmpty()){
+                adding.put(dashboard.getBacklog().size() + 1, bug.getId());
+            }
             dashboard.setBacklog(adding);
         }else {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
