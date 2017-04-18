@@ -61,26 +61,28 @@ public class ProjectController implements PredefineBaseController {
         for (Map.Entry<String, Map<Integer, String>> dashBoardEntrys : dashboard.getAllCollectionsFromDashboard().entrySet()) {
             String typeInTheDashboardCollection = dashBoardEntrys.getKey();
 
-
 //            Map<Integer, BacklogItem> addingItemsToDashboard = new HashMap<>();
-            ArrayList<BacklogItem> biArrayList = new ArrayList<>();
+//            ArrayList<BacklogItem> biArrayList = new ArrayList<>();
             for (Map.Entry<Integer, String> dashboardItemIdEntry : dashBoardEntrys.getValue().entrySet()) {
                 Integer dashboardItemPosition = dashboardItemIdEntry.getKey();
                 String dashboardItemId = dashboardItemIdEntry.getValue();
                 // ...
-//                switch (typeInTheDashboardCollection){
-//                    case "backlog":
-//
-//                        break;
-//                    case "todo":
-//                        break;
-//                    case "inprogress":
-//                        break;
-//                    case "done":
-//                        break;
-//                }
+                switch (typeInTheDashboardCollection){
+                    case "backlog":
+                        dashboardResolvingRetvalWithList.setBacklog(resolveTheItems(dashboardResolvingRetvalWithList.getBacklog(), dashboardItemId));
+                        break;
+                    case "todo":
+                        dashboardResolvingRetvalWithList.setTodo(resolveTheItems(dashboardResolvingRetvalWithList.getTodo(), dashboardItemId));
+                        break;
+                    case "inprogress":
+                        dashboardResolvingRetvalWithList.setInprogress(resolveTheItems(dashboardResolvingRetvalWithList.getInprogress(), dashboardItemId));
+                        break;
+                    case "done":
+                        dashboardResolvingRetvalWithList.setDone(resolveTheItems(dashboardResolvingRetvalWithList.getDone(), dashboardItemId));
+                        break;
+                }
 //                dashboardResolvingRetval.add(typeInTheDashboardCollection, resolveTheItem(addingItemsToDashboard, dashboardItemPosition, dashboardItemId));
-                dashboardResolvingRetvalWithList.put(typeInTheDashboardCollection, resolveTheItem(biArrayList, dashboardItemId));
+//                dashboardResolvingRetvalWithList.put(typeInTheDashboardCollection, resolveTheItem(biArrayList, dashboardItemId));
             }
 
         }
@@ -173,7 +175,7 @@ public class ProjectController implements PredefineBaseController {
         return addingItemsToDashboard;
     }
 
-    private ArrayList<BacklogItem> resolveTheItem(ArrayList<BacklogItem> addingItemsToDashboard, String dashboardItemId){
+    private ArrayList<BacklogItem> resolveTheItems(ArrayList<BacklogItem> addingItemsToDashboard, String dashboardItemId){
         if(userStoryRepository.findOne(dashboardItemId)!=null){
             addingItemsToDashboard.add(userStoryRepository.findOne(dashboardItemId));
         }else if (taskRepository.findOne(dashboardItemId)!=null){
