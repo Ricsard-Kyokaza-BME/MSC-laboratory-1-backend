@@ -155,7 +155,8 @@ public class UserStoryMethod extends Preconditioning {
         result = mvc.perform(put("/api/userstory/58d65b5df6247753c0c110a2").
             with(user(testUserKazi)).
                 with(csrf()).
-                content("{  \"title\" : \"storyALMAMAMAMA\" }").
+//                content("{  \"title\" : \"storyALMAMAMAMA\" }").
+                content("asd").
                 headers(headers)).
                 andDo(print()).
                 andReturn();

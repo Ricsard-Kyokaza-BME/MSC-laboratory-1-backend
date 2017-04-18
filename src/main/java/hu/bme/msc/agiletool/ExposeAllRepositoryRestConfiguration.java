@@ -16,6 +16,7 @@ public class ExposeAllRepositoryRestConfiguration extends RepositoryRestConfigur
         config.exposeIdsFor(Bug.class);
         config.exposeIdsFor(Project.class);
         config.exposeIdsFor(Dashboard.class);
+        config.exposeIdsFor(Sprint.class);
     }
 
 

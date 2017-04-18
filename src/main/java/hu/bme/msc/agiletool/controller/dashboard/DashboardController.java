@@ -47,7 +47,7 @@ public class DashboardController implements PredefineBaseController {
     }
 
 
-    @RequestMapping(value = "/dashboard/{id}", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/dashboard/{id}/add", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('PO', 'USER')")
     @ResponseBody
     ResponseEntity updateDashboardWithAdditionalBacklogItem(
