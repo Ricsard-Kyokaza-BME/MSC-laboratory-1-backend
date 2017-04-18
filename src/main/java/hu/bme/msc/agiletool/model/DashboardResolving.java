@@ -12,6 +12,20 @@ public class DashboardResolving {
     private ArrayList<BacklogItem> inprogress;
     private ArrayList<BacklogItem> done;
 
+    public DashboardResolving() {
+        this.backlog = new ArrayList<>();
+        this.todo = new ArrayList<>();
+        this.inprogress = new ArrayList<>();
+        this.done = new ArrayList<>();
+    }
+
+    public DashboardResolving(String id, ArrayList<BacklogItem> backlog, ArrayList<BacklogItem> todo, ArrayList<BacklogItem> inprogress, ArrayList<BacklogItem> done) {
+        this.id = id;
+        this.backlog = backlog;
+        this.todo = todo;
+        this.inprogress = inprogress;
+        this.done = done;
+    }
 
     public String getId() {
         return id;
