@@ -84,7 +84,7 @@ public class ProjectController implements PredefineBaseController {
 
         }
 
-        return new ResponseEntity<>(dashboardResolvingRetvalWithList, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(dashboardResolvingRetvalWithList, HttpStatus.OK);
     }
 
     //get dashbord from projectid
