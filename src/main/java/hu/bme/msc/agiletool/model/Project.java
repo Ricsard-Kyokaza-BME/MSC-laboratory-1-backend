@@ -13,15 +13,19 @@ public class Project {
 
     private String dashboardId;
 
+    private String sprintId;
+
     private String name;
     private String description;
     private List<String> usersInProject;
 
-    public Project(){}
+    public Project() {
+    }
 
-    public Project(String id, String dashboardId, String name, String description, List<String> usersInProject) {
+    public Project(String id, String dashboardId, String sprintId, String name, String description, List<String> usersInProject) {
         this.id = id;
         this.dashboardId = dashboardId;
+        this.sprintId = sprintId;
         this.name = name;
         this.description = description;
         this.usersInProject = usersInProject;
@@ -65,6 +69,14 @@ public class Project {
 
     public void setUsersInProject(List<String> usersInProject) {
         this.usersInProject = usersInProject;
+    }
+
+    public String getSprintId() {
+        return sprintId;
+    }
+
+    public void setSprintId(String sprintId) {
+        this.sprintId = sprintId;
     }
 
     @Override
