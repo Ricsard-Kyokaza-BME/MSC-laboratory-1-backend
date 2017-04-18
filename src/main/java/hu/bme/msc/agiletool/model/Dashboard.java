@@ -124,6 +124,16 @@ public class Dashboard {
         return false;
     }
 
+    public HashMap<String, Map<Integer, String>> getAllCollectionsFromDashboard(){
+        HashMap retVal = new HashMap<Integer, Map<Integer,String>>();
+        retVal.put("backlog", this.getBacklog());
+        retVal.put("todo", this.getTodo());
+        retVal.put("inprogress", this.getInprogress());
+        retVal.put("done", this.getDone());
+
+        return retVal;
+    }
+
     @Override
     public String toString() {
         return "Dashboard{" +

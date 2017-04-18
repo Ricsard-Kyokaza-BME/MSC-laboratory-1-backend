@@ -44,6 +44,44 @@ public class ProjectController implements PredefineBaseController {
         return new ResponseEntity<>(projectRepository.findAll(projects),HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/project/{id}/dashboard", method = RequestMethod.GET)
+    ResponseEntity returnDashboardToProject(@PathVariable("id")  String projectId){
+        if(projectId.isEmpty()){
+            return new ResponseEntity<Dashboard>(HttpStatus.BAD_REQUEST);
+        }
+
+        Project project = projectRepository.findOne(projectId);
+        Dashboard dashboard = dashboardRepository.findOne(project.getDashboardId());
+
+        DashboardResolving dashboardResolvingRetval = new DashboardResolving();
+        for (Map.Entry<String, Map<Integer, String>> dashBoardEntrys : dashboard.getAllCollectionsFromDashboard().entrySet()) {
+            String typeInTheDashboardCollection = dashBoardEntrys.getKey();
+
+
+            Map<Integer, BacklogItem> addingItemsToDashboard = new HashMap<>();
+            for (Map.Entry<Integer, String> dashboardItemIdEntry : dashBoardEntrys.getValue().entrySet()) {
+                Integer dashboardItemPosition = dashboardItemIdEntry.getKey();
+                String dashboardItemId = dashboardItemIdEntry.getValue();
+                // ...
+//                switch (typeInTheDashboardCollection){
+//                    case "backlog":
+//
+//                        break;
+//                    case "todo":
+//                        break;
+//                    case "inprogress":
+//                        break;
+//                    case "done":
+//                        break;
+//                }
+                dashboardResolvingRetval.add(typeInTheDashboardCollection, resolveTheItem(addingItemsToDashboard, dashboardItemPosition, dashboardItemId));
+            }
+
+        }
+
+        return new ResponseEntity<>(dashboardResolvingRetval, HttpStatus.BAD_REQUEST);
+    }
+
     //get dashbord from projectid
     @RequestMapping(value = "/project/resolve/{id}", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
@@ -118,4 +156,14 @@ public class ProjectController implements PredefineBaseController {
         return new ResponseEntity<>(project,HttpStatus.OK);
     }
 
+    private Map<Integer, BacklogItem> resolveTheItem(Map<Integer, BacklogItem> addingItemsToDashboard, Integer dashboardItemPosition, String dashboardItemId){
+        if(userStoryRepository.findOne(dashboardItemId)!=null){
+            addingItemsToDashboard.put(dashboardItemPosition, userStoryRepository.findOne(dashboardItemId));
+        }else if (taskRepository.findOne(dashboardItemId)!=null){
+            addingItemsToDashboard.put(dashboardItemPosition, taskRepository.findOne(dashboardItemId));
+        }else if(bugRepository.findOne(dashboardItemId)!=null){
+            addingItemsToDashboard.put(dashboardItemPosition, bugRepository.findOne(dashboardItemId));
+        }
+        return addingItemsToDashboard;
+    }
 }
