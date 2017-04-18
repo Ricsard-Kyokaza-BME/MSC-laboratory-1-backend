@@ -57,7 +57,7 @@ public class ProjectController implements PredefineBaseController {
 
 //        DashboardResolving dashboardResolvingRetval = new DashboardResolving();
 //        Map<String, ArrayList> dashboardResolvingRetvalWithList = new HashMap<>();
-        DashboardResolving dashboardResolvingRetvalWithList = new DashboardResolving();
+        DashboardResolving dashboardResolvingRetvalWithList = new DashboardResolving(dashboard.getId());
         for (Map.Entry<String, Map<Integer, String>> dashBoardEntrys : dashboard.getAllCollectionsFromDashboard().entrySet()) {
             String typeInTheDashboardCollection = dashBoardEntrys.getKey();
 
@@ -74,8 +74,8 @@ public class ProjectController implements PredefineBaseController {
                     case "todo":
                         dashboardResolvingRetvalWithList.setTodo(resolveTheItems(dashboardResolvingRetvalWithList.getTodo(), dashboardItemId));
                         break;
-                    case "inprogress":
-                        dashboardResolvingRetvalWithList.setInprogress(resolveTheItems(dashboardResolvingRetvalWithList.getInprogress(), dashboardItemId));
+                    case "inProgress":
+                        dashboardResolvingRetvalWithList.setInProgress(resolveTheItems(dashboardResolvingRetvalWithList.getInProgress(), dashboardItemId));
                         break;
                     case "done":
                         dashboardResolvingRetvalWithList.setDone(resolveTheItems(dashboardResolvingRetvalWithList.getDone(), dashboardItemId));

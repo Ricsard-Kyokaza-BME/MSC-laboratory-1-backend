@@ -1,21 +1,27 @@
 package hu.bme.msc.agiletool.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DashboardResolving {
 
     private String id;
     private ArrayList<BacklogItem> backlog;
     private ArrayList<BacklogItem> todo;
-    private ArrayList<BacklogItem> inprogress;
+    private ArrayList<BacklogItem> inProgress;
     private ArrayList<BacklogItem> done;
 
     public DashboardResolving() {
         this.backlog = new ArrayList<>();
         this.todo = new ArrayList<>();
-        this.inprogress = new ArrayList<>();
+        this.inProgress = new ArrayList<>();
+        this.done = new ArrayList<>();
+    }
+
+    public DashboardResolving(String id) {
+        this.id = id;
+        this.backlog = new ArrayList<>();
+        this.todo = new ArrayList<>();
+        this.inProgress = new ArrayList<>();
         this.done = new ArrayList<>();
     }
 
@@ -23,7 +29,7 @@ public class DashboardResolving {
         this.id = id;
         this.backlog = backlog;
         this.todo = todo;
-        this.inprogress = inprogress;
+        this.inProgress = inprogress;
         this.done = done;
     }
 
@@ -51,12 +57,12 @@ public class DashboardResolving {
         this.todo = todo;
     }
 
-    public ArrayList<BacklogItem> getInprogress() {
-        return inprogress;
+    public ArrayList<BacklogItem> getInProgress() {
+        return inProgress;
     }
 
-    public void setInprogress(ArrayList<BacklogItem> inprogress) {
-        this.inprogress = inprogress;
+    public void setInProgress(ArrayList<BacklogItem> inProgress) {
+        this.inProgress = inProgress;
     }
 
     public ArrayList<BacklogItem> getDone() {
