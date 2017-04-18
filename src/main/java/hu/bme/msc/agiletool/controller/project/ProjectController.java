@@ -18,7 +18,7 @@ import java.util.Map;
 import static hu.bme.msc.agiletool.controller.BacklogItemController.mapByStatus;
 
 @RestController
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ProjectController implements PredefineBaseController {
 
     @Autowired
@@ -38,36 +38,32 @@ public class ProjectController implements PredefineBaseController {
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity findProjects(@RequestBody List<String> projects) {
-        if (projects == null){
+        if (projects == null) {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(projectRepository.findAll(projects),HttpStatus.OK);
+        return new ResponseEntity<>(projectRepository.findAll(projects), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/project/{id}/dashboard", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
-    ResponseEntity returnDashboardToProject(@PathVariable("id")  String projectId){
-        if(projectId.isEmpty()){
-            return new ResponseEntity<Dashboard>(HttpStatus.BAD_REQUEST);
+    ResponseEntity returnDashboardToProject(@PathVariable("id") String projectId) {
+        if (projectId.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         Project project = projectRepository.findOne(projectId);
         Dashboard dashboard = dashboardRepository.findOne(project.getDashboardId());
 
-//        DashboardResolving dashboardResolvingRetval = new DashboardResolving();
-//        Map<String, ArrayList> dashboardResolvingRetvalWithList = new HashMap<>();
         DashboardResolving dashboardResolvingRetvalWithList = new DashboardResolving(dashboard.getId());
         for (Map.Entry<String, Map<Integer, String>> dashBoardEntrys : dashboard.getAllCollectionsFromDashboard().entrySet()) {
             String typeInTheDashboardCollection = dashBoardEntrys.getKey();
 
-//            Map<Integer, BacklogItem> addingItemsToDashboard = new HashMap<>();
-//            ArrayList<BacklogItem> biArrayList = new ArrayList<>();
             for (Map.Entry<Integer, String> dashboardItemIdEntry : dashBoardEntrys.getValue().entrySet()) {
-                Integer dashboardItemPosition = dashboardItemIdEntry.getKey();
+//                Integer dashboardItemPosition = dashboardItemIdEntry.getKey();
                 String dashboardItemId = dashboardItemIdEntry.getValue();
-                // ...
-                switch (typeInTheDashboardCollection){
+
+                switch (typeInTheDashboardCollection) {
                     case "backlog":
                         dashboardResolvingRetvalWithList.setBacklog(resolveTheItems(dashboardResolvingRetvalWithList.getBacklog(), dashboardItemId));
                         break;
@@ -81,10 +77,7 @@ public class ProjectController implements PredefineBaseController {
                         dashboardResolvingRetvalWithList.setDone(resolveTheItems(dashboardResolvingRetvalWithList.getDone(), dashboardItemId));
                         break;
                 }
-//                dashboardResolvingRetval.add(typeInTheDashboardCollection, resolveTheItem(addingItemsToDashboard, dashboardItemPosition, dashboardItemId));
-//                dashboardResolvingRetvalWithList.put(typeInTheDashboardCollection, resolveTheItem(biArrayList, dashboardItemId));
             }
-
         }
 
         return new ResponseEntity<>(dashboardResolvingRetvalWithList, HttpStatus.OK);
@@ -94,8 +87,8 @@ public class ProjectController implements PredefineBaseController {
     @RequestMapping(value = "/project/resolve/{id}", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
-    Map<String, Map<String, List<BacklogItem>>> returnWithExpandedProject(@PathVariable("id") String projectId){
-        if(projectId.isEmpty()){
+    Map<String, Map<String, List<BacklogItem>>> returnWithExpandedProject(@PathVariable("id") String projectId) {
+        if (projectId.isEmpty()) {
             return null;
         }
 
@@ -126,12 +119,12 @@ public class ProjectController implements PredefineBaseController {
 
     private void iterateRepo(Map<Integer, String> map, ArrayList<BacklogItem> userstory, ArrayList<BacklogItem> bug,
                              ArrayList<BacklogItem> task) {
-        for (Integer i : map.keySet()){
-            if(userStoryRepository.findOne(map.get(i))!=null){
+        for (Integer i : map.keySet()) {
+            if (userStoryRepository.findOne(map.get(i)) != null) {
                 userstory.add(userStoryRepository.findOne(map.get(i)));
-            }else if (taskRepository.findOne(map.get(i))!=null){
+            } else if (taskRepository.findOne(map.get(i)) != null) {
                 task.add(taskRepository.findOne(map.get(i)));
-            }else if(bugRepository.findOne(map.get(i))!=null){
+            } else if (bugRepository.findOne(map.get(i)) != null) {
                 bug.add(bugRepository.findOne(map.get(i)));
             }
         }
@@ -140,13 +133,13 @@ public class ProjectController implements PredefineBaseController {
     @RequestMapping(value = "/project", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
-    ResponseEntity addProjectAndModifieUsersProject(@RequestBody Project projectFromRequest){
-        if(projectFromRequest == null){
+    ResponseEntity addProjectAndModifieUsersProject(@RequestBody Project projectFromRequest) {
+        if (projectFromRequest == null) {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
-        if(projectFromRequest.getDashboardId() != null && !projectFromRequest.getDashboardId().isEmpty()){
+        if (projectFromRequest.getDashboardId() != null && !projectFromRequest.getDashboardId().isEmpty()) {
             projectRepository.save(projectFromRequest);
-        }else {
+        } else {
             Dashboard d = dashboardRepository.save(new Dashboard());
             projectFromRequest.setDashboardId(d.getId());
             projectRepository.save(projectFromRequest);
@@ -155,32 +148,22 @@ public class ProjectController implements PredefineBaseController {
 
         for (String iterInProjectUserIds : project.getUsersInProject()) {
             User actualUser = userRepository.findOne(iterInProjectUserIds);
-                ArrayList<String> userProjList = actualUser.getProjects();
-                userProjList.add(project.getId());
-                actualUser.setProjects(userProjList);
+            ArrayList<String> userProjList = actualUser.getProjects();
+            userProjList.add(project.getId());
+            actualUser.setProjects(userProjList);
             userRepository.save(actualUser);
         }
 
-        return new ResponseEntity<>(project,HttpStatus.OK);
+        return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
-    private Map<Integer, BacklogItem> resolveTheItem(Map<Integer, BacklogItem> addingItemsToDashboard, Integer dashboardItemPosition, String dashboardItemId){
-        if(userStoryRepository.findOne(dashboardItemId)!=null){
-            addingItemsToDashboard.put(dashboardItemPosition, userStoryRepository.findOne(dashboardItemId));
-        }else if (taskRepository.findOne(dashboardItemId)!=null){
-            addingItemsToDashboard.put(dashboardItemPosition, taskRepository.findOne(dashboardItemId));
-        }else if(bugRepository.findOne(dashboardItemId)!=null){
-            addingItemsToDashboard.put(dashboardItemPosition, bugRepository.findOne(dashboardItemId));
-        }
-        return addingItemsToDashboard;
-    }
 
-    private ArrayList<BacklogItem> resolveTheItems(ArrayList<BacklogItem> addingItemsToDashboard, String dashboardItemId){
-        if(userStoryRepository.findOne(dashboardItemId)!=null){
+    private ArrayList<BacklogItem> resolveTheItems(ArrayList<BacklogItem> addingItemsToDashboard, String dashboardItemId) {
+        if (userStoryRepository.findOne(dashboardItemId) != null) {
             addingItemsToDashboard.add(userStoryRepository.findOne(dashboardItemId));
-        }else if (taskRepository.findOne(dashboardItemId)!=null){
+        } else if (taskRepository.findOne(dashboardItemId) != null) {
             addingItemsToDashboard.add(taskRepository.findOne(dashboardItemId));
-        }else if(bugRepository.findOne(dashboardItemId)!=null){
+        } else if (bugRepository.findOne(dashboardItemId) != null) {
             addingItemsToDashboard.add(bugRepository.findOne(dashboardItemId));
         }
         return addingItemsToDashboard;
