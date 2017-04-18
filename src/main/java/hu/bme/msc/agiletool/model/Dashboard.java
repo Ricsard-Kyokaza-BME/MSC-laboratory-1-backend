@@ -1,5 +1,6 @@
 package hu.bme.msc.agiletool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 
@@ -56,11 +57,11 @@ public class Dashboard {
         this.todo = todo;
     }
 
-    public Map<Integer, String> getInprogress() {
+    public Map<Integer, String> getInProgress() {
         return inProgress;
     }
 
-    public void setInprogress(Map<Integer, String> inProgress) {
+    public void setInProgress(Map<Integer, String> inProgress) {
         this.inProgress = inProgress;
     }
 
@@ -124,11 +125,12 @@ public class Dashboard {
         return false;
     }
 
+    @JsonIgnore
     public HashMap<String, Map<Integer, String>> getAllCollectionsFromDashboard(){
         HashMap retVal = new HashMap<Integer, Map<Integer,String>>();
         retVal.put("backlog", this.getBacklog());
         retVal.put("todo", this.getTodo());
-        retVal.put("inProgress", this.getInprogress());
+        retVal.put("inProgress", this.getInProgress());
         retVal.put("done", this.getDone());
 
         return retVal;

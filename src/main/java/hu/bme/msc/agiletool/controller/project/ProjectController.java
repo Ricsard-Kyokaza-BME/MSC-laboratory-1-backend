@@ -98,7 +98,7 @@ public class ProjectController implements PredefineBaseController {
 
         Map<Integer, String> backlogToResolve = dashboard.getBacklog();
         Map<Integer, String> todoToResolve = dashboard.getTodo();
-        Map<Integer, String> inProgressToResolve = dashboard.getInprogress();
+        Map<Integer, String> inProgressToResolve = dashboard.getInProgress();
         Map<Integer, String> doneToResolve = dashboard.getDone();
 
         ArrayList<BacklogItem> userstory = new ArrayList<>();
