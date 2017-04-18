@@ -2,10 +2,7 @@ package hu.bme.msc.agiletool.controller.dashboard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.bme.msc.agiletool.controller.PredefineBaseController;
-import hu.bme.msc.agiletool.model.Bug;
-import hu.bme.msc.agiletool.model.Dashboard;
-import hu.bme.msc.agiletool.model.Task;
-import hu.bme.msc.agiletool.model.UserStory;
+import hu.bme.msc.agiletool.model.*;
 import hu.bme.msc.agiletool.repository.BugRepository;
 import hu.bme.msc.agiletool.repository.DashboardRepository;
 import hu.bme.msc.agiletool.repository.TaskRepository;
@@ -54,95 +51,60 @@ public class DashboardController implements PredefineBaseController {
             @PathVariable("id") String dashboardId,
             @RequestBody String backlogItem
     ) throws IOException {
-        JSONObject jObjBacklogItem = new JSONObject(backlogItem);
-
         if (backlogItem.isEmpty()) {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
 
+        JSONObject jObjBacklogItem = new JSONObject(backlogItem);
         Dashboard dashboard = dashboardRepository.findOne(dashboardId);
-//        Map<Integer, String> adding = dashboard.getBacklog();
+
         if (dashboard == null) {
             throw new RuntimeException("Getting dashboard from path variable failed.");
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        if(jObjBacklogItem.get("type").toString().equals("0")){
-            UserStory UserStoryRawObject = mapper.readValue(backlogItem, UserStory.class);
-            UserStory userStory = userStoryRepository.save(UserStoryRawObject);
+        if (jObjBacklogItem.get("type").toString().equals("0")) {
+            UserStory userStoryRawObject = mapper.readValue(backlogItem, UserStory.class);
+            UserStory userStory = userStoryRepository.save(userStoryRawObject);
 
-            if(jObjBacklogItem.has("id")) {
-                dashboard.removeItem(userStory.getId());
-            }
-            switch (UserStoryRawObject.getStatus()){
-                case BACKLOG:
-                    dashboard.addToBacklog(userStory.getId());
-                    break;
-                case TODO:
-                    dashboard.addToTodo(userStory.getId());
-                    break;
-                case IN_PROGRESS:
-                    dashboard.addToInProgress(userStory.getId());
-                    break;
-                case DONE:
-                    dashboard.addToDone(userStory.getId());
-            }
+            putBacklogItemToDashboard(jObjBacklogItem, dashboard, userStory, userStoryRawObject);
+        } else if (jObjBacklogItem.get("type").toString().equals("1")) {
+            Task taskRawObject = mapper.readValue(backlogItem, Task.class);
+            Task task = taskRepository.save(taskRawObject);
 
-//            adding.put(dashboard.getBacklog().size() + 1, userStory.getId());
-//            dashboard.setBacklog(adding);
-        }else if(jObjBacklogItem.get("type").toString().equals("1")){
-            Task TaskRawObject = mapper.readValue(backlogItem, Task.class);
-            Task task = taskRepository.save(TaskRawObject);
+            putBacklogItemToDashboard(jObjBacklogItem, dashboard, task, taskRawObject);
+        } else if (jObjBacklogItem.get("type").toString().equals("2")) {
+            Bug bugRawObject = mapper.readValue(backlogItem, Bug.class);
+            Bug bug = bugRepository.save(bugRawObject);
 
-
-            if(jObjBacklogItem.has("id")) {
-                dashboard.removeItem(task.getId());
-            }
-            switch (TaskRawObject.getStatus()){
-                case BACKLOG:
-                    dashboard.addToBacklog(task.getId());
-                    break;
-                case TODO:
-                    dashboard.addToTodo(task.getId());
-                    break;
-                case IN_PROGRESS:
-                    dashboard.addToInProgress(task.getId());
-                    break;
-                case DONE:
-                    dashboard.addToDone(task.getId());
-            }
-
-//            adding.put(dashboard.getBacklog().size() + 1, task.getId());
-//            dashboard.setBacklog(adding);
-        }else if(jObjBacklogItem.get("type").toString().equals("2")){
-            Bug BugRawObject = mapper.readValue(backlogItem, Bug.class);
-            Bug bug = bugRepository.save(BugRawObject);
-
-            if(jObjBacklogItem.has("id")) {
-                dashboard.removeItem(bug.getId());
-            }
-            switch (BugRawObject.getStatus()){
-                case BACKLOG:
-                    dashboard.addToBacklog(bug.getId());
-                    break;
-                case TODO:
-                    dashboard.addToTodo(bug.getId());
-                    break;
-                case IN_PROGRESS:
-                    dashboard.addToInProgress(bug.getId());
-                    break;
-                case DONE:
-                    dashboard.addToDone(bug.getId());
-            }
-
-//            adding.put(dashboard.getBacklog().size() + 1, bug.getId());
-//            dashboard.setBacklog(adding);
-        }else {
+            putBacklogItemToDashboard(jObjBacklogItem, dashboard, bug, bugRawObject);
+        } else {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
 
-        dashboardRepository.save(dashboard);
-        dashboard = dashboardRepository.findOne(dashboardId);
+        dashboard = dashboardRepository.save(dashboard);
+
         return new ResponseEntity<>(dashboard, HttpStatus.OK);
+    }
+
+    private void putBacklogItemToDashboard(JSONObject jObjBacklogItem, Dashboard dashboard,
+                                           BacklogItem backlogItem, BacklogItem rawObject) throws IOException {
+        if (jObjBacklogItem.has("id")) {
+            dashboard.removeItem(backlogItem.getId());
+        }
+
+        switch (rawObject.getStatus()) {
+            case BACKLOG:
+                dashboard.addToBacklog(backlogItem.getId());
+                break;
+            case TODO:
+                dashboard.addToTodo(backlogItem.getId());
+                break;
+            case IN_PROGRESS:
+                dashboard.addToInProgress(backlogItem.getId());
+                break;
+            case DONE:
+                dashboard.addToDone(backlogItem.getId());
+        }
     }
 }

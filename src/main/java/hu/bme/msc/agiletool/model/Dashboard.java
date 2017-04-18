@@ -90,38 +90,24 @@ public class Dashboard {
     }
 
     public boolean removeItem(String id){
-        for (Map.Entry<Integer, String> e : backlog.entrySet()) {
+        if(removeEntryFromMap(backlog, id) || removeEntryFromMap(todo, id) ||
+            removeEntryFromMap(inProgress, id) || removeEntryFromMap(done, id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean removeEntryFromMap(Map<Integer, String> map, String id) {
+        for (Map.Entry<Integer, String> e : map.entrySet()) {
             Integer key = e.getKey();
             String value = e.getValue();
             if(value.equals(id)){
-                backlog.remove(key, value);
+                map.remove(key, value);
                 return true;
             }
         }
-        for (Map.Entry<Integer, String> e : todo.entrySet()) {
-            Integer key = e.getKey();
-            String value = e.getValue();
-            if(value.equals(id)){
-                todo.remove(key, value);
-                return true;
-            }
-        }
-        for (Map.Entry<Integer, String> e : inProgress.entrySet()) {
-            Integer key = e.getKey();
-            String value = e.getValue();
-            if(value.equals(id)){
-                inProgress.remove(key, value);
-                return true;
-            }
-        }
-        for (Map.Entry<Integer, String> e : done.entrySet()) {
-            Integer key = e.getKey();
-            String value = e.getValue();
-            if(value.equals(id)){
-                done.remove(key, value);
-                return true;
-            }
-        }
+
         return false;
     }
 
