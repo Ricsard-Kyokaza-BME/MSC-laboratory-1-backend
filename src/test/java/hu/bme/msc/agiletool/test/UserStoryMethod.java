@@ -15,6 +15,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -130,6 +131,43 @@ public class UserStoryMethod extends Preconditioning {
                 with(csrf()).
                 content(o.toString()).
                 headers(headers)).
+                andExpect(status().isOk()).
+                andDo(print()).
+                andReturn();
+    }
+
+    @Test
+    public void preformPUTToFetchListOfUserStory() throws Exception {
+        preformPostToFetchListOfUserStory();
+
+        result = mvc.perform(
+                get("/api/userstory/58d65b5df6247753c0c110a2").
+                        with(user(testUserAlice)).
+                        with(csrf()).
+                        accept(MediaTypes.HAL_JSON)).
+                andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
+                andExpect(status().isOk()).
+                andDo(print()).
+                andReturn();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE);
+        result = mvc.perform(put("/api/userstory/58d65b5df6247753c0c110a2").
+            with(user(testUserKazi)).
+                with(csrf()).
+                content("{  \"title\" : \"story111asddaad11111\" }").
+                headers(headers)).
+                andDo(print()).
+                andReturn();
+
+        System.out.println(result.getResponse());
+
+        result = mvc.perform(
+                get("/api/userstory/58d65b5df6247753c0c110a2").
+                        with(user(testUserAlice)).
+                        with(csrf()).
+                        accept(MediaTypes.HAL_JSON)).
+                andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON)).
                 andExpect(status().isOk()).
                 andDo(print()).
                 andReturn();
