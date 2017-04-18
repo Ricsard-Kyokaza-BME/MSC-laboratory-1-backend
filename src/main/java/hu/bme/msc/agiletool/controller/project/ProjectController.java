@@ -56,7 +56,8 @@ public class ProjectController implements PredefineBaseController {
         Dashboard dashboard = dashboardRepository.findOne(project.getDashboardId());
 
 //        DashboardResolving dashboardResolvingRetval = new DashboardResolving();
-        Map<String, ArrayList> dashboardResolvingRetvalWithList = new HashMap<>();
+//        Map<String, ArrayList> dashboardResolvingRetvalWithList = new HashMap<>();
+        DashboardResolving dashboardResolvingRetvalWithList = new DashboardResolving();
         for (Map.Entry<String, Map<Integer, String>> dashBoardEntrys : dashboard.getAllCollectionsFromDashboard().entrySet()) {
             String typeInTheDashboardCollection = dashBoardEntrys.getKey();
 

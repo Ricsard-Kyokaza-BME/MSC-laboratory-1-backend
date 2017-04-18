@@ -6,25 +6,29 @@ import java.util.Map;
 
 public class DashboardResolving {
 
-    HashMap<String, Map<Integer, BacklogItem>> dashboardCollection;
+    private String id;
+    private Map<String, ArrayList<BacklogItem>> dashboardCollection;
 
     public DashboardResolving() {
         dashboardCollection = new HashMap<>();
     }
 
-    public DashboardResolving(HashMap<String, Map<Integer, BacklogItem>> dashboardCollection) {
-        this.dashboardCollection = dashboardCollection;
+    public String getId() {
+        return id;
     }
 
-    public HashMap<String, Map<Integer, BacklogItem>> getDashboardCollection() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Map<String, ArrayList<BacklogItem>> getDashboardCollection() {
         return dashboardCollection;
     }
 
-    public void setDashboardCollection(HashMap<String, Map<Integer, BacklogItem>> dashboardCollection) {
+    public void setDashboardCollection(Map<String, ArrayList<BacklogItem>> dashboardCollection) {
         this.dashboardCollection = dashboardCollection;
     }
-
-    public void add(String key, Map<Integer, BacklogItem> value){
-        dashboardCollection.put(key, value);
+    public void put(String typeInTheDashboardCollection, ArrayList<BacklogItem> itemsToBeAdded){
+        this.dashboardCollection.put(typeInTheDashboardCollection, itemsToBeAdded);
     }
 }
