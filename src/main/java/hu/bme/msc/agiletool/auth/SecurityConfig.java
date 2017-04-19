@@ -22,7 +22,6 @@ import org.springframework.social.connect.web.ProviderSignInController;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
-@ComponentScan(basePackages = { "hu.bme.msc.agiletool.auth" })
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
