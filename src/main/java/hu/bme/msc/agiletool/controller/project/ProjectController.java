@@ -148,7 +148,7 @@ public class ProjectController implements PredefineBaseController {
 
         for (String iterInProjectUserIds : project.getUsersInProject()) {
             User actualUser = userRepository.findOne(iterInProjectUserIds);
-            ArrayList<String> userProjList = actualUser.getProjects();
+            List<String> userProjList = actualUser.getProjects();
             userProjList.add(project.getId());
             actualUser.setProjects(userProjList);
             userRepository.save(actualUser);

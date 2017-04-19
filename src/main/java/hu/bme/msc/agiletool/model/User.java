@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +24,14 @@ public class User {
     private String password;
 
     private List<GrantedAuthority> roles;
-    private ArrayList<String> projects;
+    private List<String> projects;
 
-    public User() {}
+    public User() {
+        roles = new ArrayList<>();
+        projects = new ArrayList<>();
+    }
 
-    public User(String firstName, String lastName, String username, String email, String password, List<GrantedAuthority> roles, ArrayList<String> projects) {
+    public User(String firstName, String lastName, String username, String email, String password, List<GrantedAuthority> roles, List<String> projects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -97,21 +101,19 @@ public class User {
         return getFirstName() + " " + getLastName();
     }
 
-    public ArrayList<String> getProjects() {
+    public List<String> getProjects() {
         return projects;
     }
 
-    public void setProjects(ArrayList<String> projects) {
+    public void setProjects(List<String> projects) {
         this.projects = projects;
     }
 
-//    @Override
-//    public String toString() {
-//        return String.format(
-//                "User[id=%s, firstName='%s', lastName='%s', username='%s', email='%s', proje]",
-//                id, firstName, lastName, username, email);
-//    }
-
+    public void addRole(String... roles) {
+        for(String role : roles) {
+            this.roles.add(new SimpleGrantedAuthority(role));
+        }
+    }
 
     @Override
     public String toString() {

@@ -1,5 +1,5 @@
 app:
-    host: http://localhost:8115
+    host: http://localhost
 server:
     port: 8112
 spring:
@@ -8,3 +8,7 @@ spring:
             database: agile-tool-test
         rest:
             base-path: /api
+    social:
+        facebook:
+            appId: 1387159251342491
+            appSecret: 8cce14dc94e1dc728de8e3bc53f68318
