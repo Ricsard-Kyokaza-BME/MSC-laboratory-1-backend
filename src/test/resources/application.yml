@@ -1,0 +1,10 @@
+app:
+    host: http://balogotthon.ddns.net:8115
+server:
+    port: 8112
+spring:
+    data:
+        mongodb:
+            database: agile-tool-test
+        rest:
+            base-path: /api

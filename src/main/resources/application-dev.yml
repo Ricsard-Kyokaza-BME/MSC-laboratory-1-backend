@@ -1,0 +1,10 @@
+app:
+    host: http://localhost:8115
+server:
+    port: 8112
+spring:
+    data:
+        mongodb:
+            database: agile-tool
+        rest:
+            base-path: /api
