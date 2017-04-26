@@ -76,9 +76,15 @@ public class ProjectController implements PredefineBaseController {
 
         Project project = projectRepository.findOne(projectId);
         Dashboard dashboard = dashboardRepository.findOne(project.getDashboardId());
-        Sprint sprint = sprintRepository.findOne(project.getSprintId());
+        Sprint sprint;
 
         DashboardResolving dashboardResolvingRetvalWithList = new DashboardResolving(dashboard.getId());
+
+        if(!project.getSprintId().isEmpty()){
+            sprint = sprintRepository.findOne(project.getSprintId());
+            dashboardResolvingRetvalWithList.setBacklogItemsInTheSprint(sprint.getBacklogItemsInvolved());
+        }
+
         for (Map.Entry<String, Map<Integer, String>> dashBoardEntrys : dashboard.getAllCollectionsFromDashboard().entrySet()) {
             String typeInTheDashboardCollection = dashBoardEntrys.getKey();
 
@@ -101,7 +107,7 @@ public class ProjectController implements PredefineBaseController {
                 }
             }
         }
-        dashboardResolvingRetvalWithList.setBacklogItemsInTheSprint(sprint.getBacklogItemsInvolved());
+
 
         return new ResponseEntity<>(dashboardResolvingRetvalWithList, HttpStatus.OK);
     }
