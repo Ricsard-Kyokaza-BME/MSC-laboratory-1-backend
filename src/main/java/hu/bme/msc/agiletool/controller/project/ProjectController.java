@@ -3,6 +3,7 @@ package hu.bme.msc.agiletool.controller.project;
 import hu.bme.msc.agiletool.controller.PredefineBaseController;
 import hu.bme.msc.agiletool.model.*;
 import hu.bme.msc.agiletool.repository.*;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static hu.bme.msc.agiletool.controller.BacklogItemController.mapByStatus;
+import static org.joda.time.Days.daysBetween;
 
 @RestController
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -199,9 +204,9 @@ public class ProjectController implements PredefineBaseController {
     }
 
     private boolean validateDateInSprint(Sprint sprint) {
-        if (sprint.getEndTime().after(sprint.getStartTime()) &&
-                (sprint.getStartTime().after(new Date()) || sprint.getStartTime().equals(new Date()))
-                ) {
+        DateTime start = new DateTime(sprint.getStartTime());
+        DateTime end = new DateTime(sprint.getEndTime());
+        if (start.isBefore(end) && daysBetween(start.toLocalDate(), end.toLocalDate()).getDays()>0){
             return true;
         }
 

@@ -61,6 +61,7 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 	compile("org.springframework.boot:spring-boot-devtools")
 	compile group: 'org.json', name: 'json', version: '20160212'
+	compile group: 'joda-time', name: 'joda-time', version: '2.9.9'
 
 	compile("org.springframework.boot:spring-boot-starter-social-facebook")
 	compile("org.springframework.social:spring-social-security")
