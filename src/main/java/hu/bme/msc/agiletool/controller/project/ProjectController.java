@@ -33,6 +33,8 @@ public class ProjectController implements PredefineBaseController {
     private TaskRepository taskRepository;
     @Autowired
     private BugRepository bugRepository;
+    @Autowired
+    private SprintRepository sprintRepository;
 
     @RequestMapping(value = "/project/find", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
@@ -54,13 +56,13 @@ public class ProjectController implements PredefineBaseController {
 
         Project project = projectRepository.findOne(projectId);
         Dashboard dashboard = dashboardRepository.findOne(project.getDashboardId());
+        Sprint sprint = sprintRepository.findOne(project.getSprintId());
 
         DashboardResolving dashboardResolvingRetvalWithList = new DashboardResolving(dashboard.getId());
         for (Map.Entry<String, Map<Integer, String>> dashBoardEntrys : dashboard.getAllCollectionsFromDashboard().entrySet()) {
             String typeInTheDashboardCollection = dashBoardEntrys.getKey();
 
             for (Map.Entry<Integer, String> dashboardItemIdEntry : dashBoardEntrys.getValue().entrySet()) {
-//                Integer dashboardItemPosition = dashboardItemIdEntry.getKey();
                 String dashboardItemId = dashboardItemIdEntry.getValue();
 
                 switch (typeInTheDashboardCollection) {
@@ -79,6 +81,7 @@ public class ProjectController implements PredefineBaseController {
                 }
             }
         }
+        dashboardResolvingRetvalWithList.setBacklogItemsInTheSprint(sprint.getBacklogItemsInvolved());
 
         return new ResponseEntity<>(dashboardResolvingRetvalWithList, HttpStatus.OK);
     }
