@@ -46,6 +46,27 @@ public class ProjectController implements PredefineBaseController {
         return new ResponseEntity<>(projectRepository.findAll(projects), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/project/{id}/sprint", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO')")
+    @ResponseBody
+    ResponseEntity addingSprintToProjectByUpdatingProject(
+            @PathVariable("id") String projectId,
+            @RequestBody Sprint sprint) {
+
+        if (sprint == null) {
+            return new ResponseEntity<>("Sprint field is empty!", HttpStatus.BAD_REQUEST);
+        }
+
+        Project project = projectRepository.findOne(projectId);
+        Sprint sprintFromSave = sprintRepository.save(sprint);
+
+        project.setSprintId(sprintFromSave.getId());
+
+        projectRepository.save(project);
+
+        return new ResponseEntity<>(sprintFromSave, HttpStatus.CREATED);
+    }
+
     @RequestMapping(value = "/project/{id}/dashboard", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
