@@ -80,7 +80,7 @@ public class ProjectController implements PredefineBaseController {
 
         DashboardResolving dashboardResolvingRetvalWithList = new DashboardResolving(dashboard.getId());
 
-        if(!project.getSprintId().isEmpty()){
+        if(project.getSprintId() != null && !project.getSprintId().isEmpty()){
             sprint = sprintRepository.findOne(project.getSprintId());
             dashboardResolvingRetvalWithList.setBacklogItemsInTheSprint(sprint.getBacklogItemsInvolved());
         }
