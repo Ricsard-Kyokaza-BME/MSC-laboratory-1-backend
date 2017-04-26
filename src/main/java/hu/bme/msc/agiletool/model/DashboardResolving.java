@@ -10,14 +10,14 @@ public class DashboardResolving {
     private ArrayList<BacklogItem> todo;
     private ArrayList<BacklogItem> inProgress;
     private ArrayList<BacklogItem> done;
-    private List<String> backlogItemsInTheSprint;
+//    private List<String> backlogItemsInTheSprint;
+    private Sprint sprint;
 
     public DashboardResolving() {
         this.backlog = new ArrayList<>();
         this.todo = new ArrayList<>();
         this.inProgress = new ArrayList<>();
         this.done = new ArrayList<>();
-        this.backlogItemsInTheSprint = new ArrayList<>();
     }
 
     public DashboardResolving(String id) {
@@ -26,7 +26,6 @@ public class DashboardResolving {
         this.todo = new ArrayList<>();
         this.inProgress = new ArrayList<>();
         this.done = new ArrayList<>();
-        this.backlogItemsInTheSprint = new ArrayList<>();
     }
 
     public DashboardResolving(String id, ArrayList<BacklogItem> backlog, ArrayList<BacklogItem> todo, ArrayList<BacklogItem> inProgress, ArrayList<BacklogItem> done, ArrayList<String> backlogItemsInTheSprint) {
@@ -35,7 +34,6 @@ public class DashboardResolving {
         this.todo = todo;
         this.inProgress = inProgress;
         this.done = done;
-        this.backlogItemsInTheSprint = backlogItemsInTheSprint;
     }
 
     public String getId() {
@@ -78,11 +76,11 @@ public class DashboardResolving {
         this.done = done;
     }
 
-    public List<String> getBacklogItemsInTheSprint() {
-        return backlogItemsInTheSprint;
+    public Sprint getSprint() {
+        return sprint;
     }
 
-    public void setBacklogItemsInTheSprint(List<String> backlogItemsInTheSprint) {
-        this.backlogItemsInTheSprint = backlogItemsInTheSprint;
+    public void setSprint(Sprint sprint) {
+        this.sprint = sprint;
     }
 }
