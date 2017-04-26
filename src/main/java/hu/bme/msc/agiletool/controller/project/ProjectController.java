@@ -10,10 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static hu.bme.msc.agiletool.controller.BacklogItemController.mapByStatus;
 
@@ -55,6 +52,8 @@ public class ProjectController implements PredefineBaseController {
 
         if (sprint == null) {
             return new ResponseEntity<>("Sprint field is empty!", HttpStatus.BAD_REQUEST);
+        } else if (!validateDateInSprint(sprint)) {
+            return new ResponseEntity<>("Invalid time period in sprint!", HttpStatus.BAD_REQUEST);
         }
 
         Project project = projectRepository.findOne(projectId);
@@ -191,5 +190,15 @@ public class ProjectController implements PredefineBaseController {
             addingItemsToDashboard.add(bugRepository.findOne(dashboardItemId));
         }
         return addingItemsToDashboard;
+    }
+
+    private boolean validateDateInSprint(Sprint sprint) {
+        if (sprint.getEndTime().after(sprint.getStartTime()) &&
+                (sprint.getStartTime().after(new Date()) || sprint.getStartTime().equals(new Date()))
+                ) {
+            return true;
+        }
+
+        return false;
     }
 }
