@@ -8,7 +8,6 @@ import hu.bme.msc.agiletool.repository.BugRepository;
 import hu.bme.msc.agiletool.repository.DashboardRepository;
 import hu.bme.msc.agiletool.repository.TaskRepository;
 import hu.bme.msc.agiletool.repository.UserStoryRepository;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,7 +50,7 @@ public class DashboardController implements PredefineBaseController {
             @RequestBody String backlogItem
     ) throws Exception {
         if (backlogItem.isEmpty()) {
-            return new ResponseEntity<>("Backlog item is empty.",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Backlog item is empty.", HttpStatus.BAD_REQUEST);
         }
 
         JSONObject jObjBacklogItem = new JSONObject(backlogItem);
@@ -62,9 +61,9 @@ public class DashboardController implements PredefineBaseController {
         }
 
 
-        if (putItemToDashboard(jObjBacklogItem, backlogItem, dashboard) == null){
+        if (putItemToDashboard(jObjBacklogItem, backlogItem, dashboard) == null) {
             return new ResponseEntity<>("Problem occurred in dashboard manipulation", HttpStatus.BAD_REQUEST);
-        }else{
+        } else {
             return new ResponseEntity<>(dashboard, HttpStatus.OK);
         }
 
@@ -85,9 +84,9 @@ public class DashboardController implements PredefineBaseController {
         JSONObject jObjBacklogItem = new JSONObject(dashboardWithItem.getBacklogItem());
         Dashboard dashboard = dashboardRepository.save(dashboardWithItem.getDashboard());
 
-        if (putItemToDashboard(jObjBacklogItem, dashboardWithItem.getBacklogItem(), dashboard) == null){
+        if (putItemToDashboard(jObjBacklogItem, dashboardWithItem.getBacklogItem(), dashboard) == null) {
             return new ResponseEntity<>("Problem occurred in dashboard manipulation", HttpStatus.BAD_REQUEST);
-        }else{
+        } else {
             return new ResponseEntity<>(dashboard, HttpStatus.OK);
         }
     }
