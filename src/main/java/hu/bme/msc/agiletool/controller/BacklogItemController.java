@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BacklogItemController {
 
     @Autowired
@@ -53,15 +53,15 @@ public class BacklogItemController {
     }
 
     public static void mapByStatus(List<? extends BacklogItem> items,
-                             Map<String, Map<String, List<BacklogItem>>> target,
-                             String subTarget) {
+                                   Map<String, Map<String, List<BacklogItem>>> target,
+                                   String subTarget) {
         Map<String, List<BacklogItem>> subMap = new HashMap<>();
         subMap.put("backlog", new ArrayList<>());
         subMap.put("todo", new ArrayList<>());
         subMap.put("inProgress", new ArrayList<>());
         subMap.put("done", new ArrayList<>());
-        if(items != null) {
-            for(BacklogItem item : items) {
+        if (items != null) {
+            for (BacklogItem item : items) {
                 switch (item.getStatus()) {
                     case BACKLOG:
                         subMap.get("backlog").add(item);

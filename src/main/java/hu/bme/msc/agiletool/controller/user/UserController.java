@@ -16,29 +16,13 @@ public class UserController implements PredefineBaseController {
     @Autowired
     private UserRepository userRepository;
 
-//    @RequestMapping(value = "/user/getUser", method = RequestMethod.POST)
-//    @ResponseBody
-//    ResponseEntity getUsers(@RequestBody UserSearchRequest searchRequest) {
-//        if(searchRequest == null){
-//            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        List<User> retVal = new ArrayList<>();
-//        for (User iter: userRepository.findAll()) {
-//            if(iter.getFullName().toUpperCase().contains(searchRequest.getKeyword().toUpperCase())){
-//                retVal.add(iter);
-//            }
-//        }
-//        return new ResponseEntity<>(retVal,HttpStatus.OK);
-//    }
-
     @RequestMapping(value = "/user/find", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity findUsersByIds(@RequestBody List<String> users) {
-        if (users == null){
+        if (users == null) {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userRepository.findAll(users),HttpStatus.OK);
+        return new ResponseEntity<>(userRepository.findAll(users), HttpStatus.OK);
     }
 }
