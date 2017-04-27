@@ -3,10 +3,12 @@ package hu.bme.msc.agiletool.controller.dashboard;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.bme.msc.agiletool.controller.PredefineBaseController;
 import hu.bme.msc.agiletool.model.*;
+import hu.bme.msc.agiletool.model.wrappers.DashboardWithItem;
 import hu.bme.msc.agiletool.repository.BugRepository;
 import hu.bme.msc.agiletool.repository.DashboardRepository;
 import hu.bme.msc.agiletool.repository.TaskRepository;
 import hu.bme.msc.agiletool.repository.UserStoryRepository;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +37,7 @@ public class DashboardController implements PredefineBaseController {
     @ResponseBody
     ResponseEntity findDashboards(@RequestBody List<String> dashboards) {
         if (dashboards == null) {
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Dashboard is null.", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(dashboardRepository.findAll(dashboards), HttpStatus.OK);
     }
@@ -49,7 +51,7 @@ public class DashboardController implements PredefineBaseController {
             @RequestBody String backlogItem
     ) throws Exception {
         if (backlogItem.isEmpty()) {
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Backlog item is empty.",HttpStatus.BAD_REQUEST);
         }
 
         JSONObject jObjBacklogItem = new JSONObject(backlogItem);
@@ -59,11 +61,36 @@ public class DashboardController implements PredefineBaseController {
             throw new RuntimeException("Getting dashboard from path variable failed.");
         }
 
-        return putItemToDashboard(jObjBacklogItem, backlogItem, dashboard);
+
+        if (putItemToDashboard(jObjBacklogItem, backlogItem, dashboard) == null){
+            return new ResponseEntity<>("Problem occurred in dashboard manipulation", HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<>(dashboard, HttpStatus.OK);
+        }
+
     }
 
 
+    @RequestMapping(value = "/dashboard/{id}/dnd", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('PO', 'USER')")
+    @ResponseBody
+    ResponseEntity dashboardUpdateAfterDrangAndDrop(
+            @PathVariable("id") String dashboardId,
+            @RequestBody DashboardWithItem dashboardWithItem
+    ) throws Exception {
+        if (dashboardWithItem == null) {
+            return new ResponseEntity<>("Dashboard wrapper is null.", HttpStatus.BAD_REQUEST);
+        }
 
+        JSONObject jObjBacklogItem = new JSONObject(dashboardWithItem.getBacklogItem());
+        Dashboard dashboard = dashboardRepository.save(dashboardWithItem.getDashboard());
+
+        if (putItemToDashboard(jObjBacklogItem, dashboardWithItem.getBacklogItem(), dashboard) == null){
+            return new ResponseEntity<>("Problem occurred in dashboard manipulation", HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<>(dashboard, HttpStatus.OK);
+        }
+    }
 
     private void putBacklogItemToDashboard(JSONObject jObjBacklogItem, Dashboard dashboard,
                                            BacklogItem backlogItem, BacklogItem rawObject) throws IOException {
@@ -86,7 +113,7 @@ public class DashboardController implements PredefineBaseController {
         }
     }
 
-    private ResponseEntity putItemToDashboard(JSONObject jObjBacklogItem, String backlogItem, Dashboard dashboard) throws Exception{
+    private Dashboard putItemToDashboard(JSONObject jObjBacklogItem, String backlogItem, Dashboard dashboard) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         if (jObjBacklogItem.get("type").toString().equals("0")) {
             UserStory userStoryRawObject = mapper.readValue(backlogItem, UserStory.class);
@@ -104,10 +131,10 @@ public class DashboardController implements PredefineBaseController {
 
             putBacklogItemToDashboard(jObjBacklogItem, dashboard, bug, bugRawObject);
         } else {
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            return null;
         }
 
         dashboard = dashboardRepository.save(dashboard);
-        return new ResponseEntity<>(dashboard, HttpStatus.OK);
+        return dashboard;
     }
 }
