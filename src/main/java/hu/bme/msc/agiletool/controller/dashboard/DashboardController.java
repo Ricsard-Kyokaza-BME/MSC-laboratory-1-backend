@@ -47,7 +47,7 @@ public class DashboardController implements PredefineBaseController {
     ResponseEntity updateDashboardWithAdditionalBacklogItem(
             @PathVariable("id") String dashboardId,
             @RequestBody String backlogItem
-    ) throws IOException {
+    ) throws Exception {
         if (backlogItem.isEmpty()) {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
@@ -59,6 +59,34 @@ public class DashboardController implements PredefineBaseController {
             throw new RuntimeException("Getting dashboard from path variable failed.");
         }
 
+        return putItemToDashboard(jObjBacklogItem, backlogItem, dashboard);
+    }
+
+
+
+
+    private void putBacklogItemToDashboard(JSONObject jObjBacklogItem, Dashboard dashboard,
+                                           BacklogItem backlogItem, BacklogItem rawObject) throws IOException {
+        if (jObjBacklogItem.has("id")) {
+            dashboard.removeItem(backlogItem.getId());
+        }
+
+        switch (rawObject.getStatus()) {
+            case BACKLOG:
+                dashboard.addToBacklog(backlogItem.getId());
+                break;
+            case TODO:
+                dashboard.addToTodo(backlogItem.getId());
+                break;
+            case IN_PROGRESS:
+                dashboard.addToInProgress(backlogItem.getId());
+                break;
+            case DONE:
+                dashboard.addToDone(backlogItem.getId());
+        }
+    }
+
+    private ResponseEntity putItemToDashboard(JSONObject jObjBacklogItem, String backlogItem, Dashboard dashboard) throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         if (jObjBacklogItem.get("type").toString().equals("0")) {
             UserStory userStoryRawObject = mapper.readValue(backlogItem, UserStory.class);
@@ -80,28 +108,6 @@ public class DashboardController implements PredefineBaseController {
         }
 
         dashboard = dashboardRepository.save(dashboard);
-
         return new ResponseEntity<>(dashboard, HttpStatus.OK);
-    }
-
-    private void putBacklogItemToDashboard(JSONObject jObjBacklogItem, Dashboard dashboard,
-                                           BacklogItem backlogItem, BacklogItem rawObject) throws IOException {
-        if (jObjBacklogItem.has("id")) {
-            dashboard.removeItem(backlogItem.getId());
-        }
-
-        switch (rawObject.getStatus()) {
-            case BACKLOG:
-                dashboard.addToBacklog(backlogItem.getId());
-                break;
-            case TODO:
-                dashboard.addToTodo(backlogItem.getId());
-                break;
-            case IN_PROGRESS:
-                dashboard.addToInProgress(backlogItem.getId());
-                break;
-            case DONE:
-                dashboard.addToDone(backlogItem.getId());
-        }
     }
 }
