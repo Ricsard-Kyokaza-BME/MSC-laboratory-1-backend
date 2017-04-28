@@ -176,7 +176,7 @@ public class ProjectController implements PredefineBaseController {
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/project/{id}/remove", method = RequestMethod.POST)
+    @RequestMapping(value = "/project/{id}/remove", method = RequestMethod.DELETE)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity removeProject(
