@@ -2,6 +2,7 @@ package hu.bme.msc.agiletool.controller.project;
 
 import hu.bme.msc.agiletool.controller.PredefineBaseController;
 import hu.bme.msc.agiletool.model.*;
+import hu.bme.msc.agiletool.model.wrappers.DashboardResolving;
 import hu.bme.msc.agiletool.repository.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class ProjectController implements PredefineBaseController {
     @ResponseBody
     ResponseEntity findProjects(@RequestBody List<String> projects) {
         if (projects == null) {
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(projectRepository.findAll(projects), HttpStatus.OK);
     }
@@ -147,25 +148,13 @@ public class ProjectController implements PredefineBaseController {
         return allItem;
     }
 
-    private void iterateRepo(Map<Integer, String> map, ArrayList<BacklogItem> userstory, ArrayList<BacklogItem> bug,
-                             ArrayList<BacklogItem> task) {
-        for (Integer i : map.keySet()) {
-            if (userStoryRepository.findOne(map.get(i)) != null) {
-                userstory.add(userStoryRepository.findOne(map.get(i)));
-            } else if (taskRepository.findOne(map.get(i)) != null) {
-                task.add(taskRepository.findOne(map.get(i)));
-            } else if (bugRepository.findOne(map.get(i)) != null) {
-                bug.add(bugRepository.findOne(map.get(i)));
-            }
-        }
-    }
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
     ResponseEntity addProjectAndModifieUsersProject(@RequestBody Project projectFromRequest) {
         if (projectFromRequest == null) {
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if (projectFromRequest.getDashboardId() != null && !projectFromRequest.getDashboardId().isEmpty()) {
             projectRepository.save(projectFromRequest);
@@ -187,6 +176,39 @@ public class ProjectController implements PredefineBaseController {
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/project/{id}/remove", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
+    @ResponseBody
+    ResponseEntity findProjects(
+            @PathVariable("id") String projectId,
+            @RequestBody String userId
+    ) {
+        if (userId.isEmpty()) {
+            return new ResponseEntity<>("User id is empty.", HttpStatus.BAD_REQUEST);
+        }
+        projectRepository.delete(projectId);
+
+        User user = userRepository.findOne(userId);
+        List<String> userProjects = user.getProjects();
+        userProjects.remove(projectId);
+        user.setProjects(userProjects);
+        userRepository.save(user);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private void iterateRepo(Map<Integer, String> map, ArrayList<BacklogItem> userstory, ArrayList<BacklogItem> bug,
+                             ArrayList<BacklogItem> task) {
+        for (Integer i : map.keySet()) {
+            if (userStoryRepository.findOne(map.get(i)) != null) {
+                userstory.add(userStoryRepository.findOne(map.get(i)));
+            } else if (taskRepository.findOne(map.get(i)) != null) {
+                task.add(taskRepository.findOne(map.get(i)));
+            } else if (bugRepository.findOne(map.get(i)) != null) {
+                bug.add(bugRepository.findOne(map.get(i)));
+            }
+        }
+    }
 
     private ArrayList<BacklogItem> resolveTheItems(ArrayList<BacklogItem> addingItemsToDashboard, String dashboardItemId) {
         if (userStoryRepository.findOne(dashboardItemId) != null) {

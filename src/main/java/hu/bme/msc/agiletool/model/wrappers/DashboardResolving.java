@@ -1,4 +1,7 @@
-package hu.bme.msc.agiletool.model;
+package hu.bme.msc.agiletool.model.wrappers;
+
+import hu.bme.msc.agiletool.model.BacklogItem;
+import hu.bme.msc.agiletool.model.Sprint;
 
 import java.util.ArrayList;
 import java.util.List;
