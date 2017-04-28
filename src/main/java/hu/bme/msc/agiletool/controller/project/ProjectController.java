@@ -179,7 +179,7 @@ public class ProjectController implements PredefineBaseController {
     @RequestMapping(value = "/project/{id}/remove", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('PO','USER')")
     @ResponseBody
-    ResponseEntity findProjects(
+    ResponseEntity removeProject(
             @PathVariable("id") String projectId,
             @RequestBody String userId
     ) {
