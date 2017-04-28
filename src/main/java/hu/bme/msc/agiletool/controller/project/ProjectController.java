@@ -188,11 +188,16 @@ public class ProjectController implements PredefineBaseController {
         }
         projectRepository.delete(projectId);
 
-        User user = userRepository.findOne(userId);
-        List<String> userProjects = user.getProjects();
-        userProjects.remove(projectId);
-        user.setProjects(userProjects);
-        userRepository.save(user);
+        List<User> users = userRepository.findAll();
+        //TODO Should do more effective
+        for (User userIter : users) {
+            if (userIter.getProjects().contains(projectId)) {
+                List<String> userProjects = userIter.getProjects();
+                userProjects.remove(projectId);
+                userIter.setProjects(userProjects);
+                userRepository.save(userIter);
+            }
+        }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
