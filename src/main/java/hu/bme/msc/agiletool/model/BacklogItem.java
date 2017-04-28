@@ -2,10 +2,12 @@ package hu.bme.msc.agiletool.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import hu.bme.msc.agiletool.model.wrappers.CheckList;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class BacklogItem {
@@ -22,10 +24,11 @@ public abstract class BacklogItem {
     private ArrayList<String>     depending;
     private BacklogStatus         status;
     private BacklogItemType       type;
+    private List<CheckList>       checkList;
 
     public BacklogItem() { }
 
-    public BacklogItem(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, BacklogItemType type) {
+    public BacklogItem(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, BacklogItemType type, List<CheckList> checkList) {
         this.id = id;
         this.title = title;
         this.createDate = createDate;
@@ -36,6 +39,7 @@ public abstract class BacklogItem {
         this.depending = depending;
         this.status = status;
         this.type = type;
+        this.checkList = checkList;
     }
 
     public String getId() {
@@ -118,6 +122,14 @@ public abstract class BacklogItem {
         this.type = type;
     }
 
+    public List<CheckList> getCheckList() {
+        return checkList;
+    }
+
+    public void setCheckList(List<CheckList> checkList) {
+        this.checkList = checkList;
+    }
+
     @Override
     public String toString() {
         return "BacklogItem{" +
@@ -131,6 +143,7 @@ public abstract class BacklogItem {
                 ", depending=" + depending +
                 ", status=" + status +
                 ", type=" + type +
+                ", checkList=" + checkList +
                 '}';
     }
 }
