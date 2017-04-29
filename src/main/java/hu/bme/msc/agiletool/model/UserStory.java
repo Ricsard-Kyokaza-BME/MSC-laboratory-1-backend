@@ -1,7 +1,10 @@
 package hu.bme.msc.agiletool.model;
 
+import hu.bme.msc.agiletool.model.wrappers.CheckList;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class UserStory extends BacklogItem {
 
@@ -12,8 +15,16 @@ public class UserStory extends BacklogItem {
     public UserStory() {
     }
 
-    public UserStory(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, ArrayList<String> subtasks, String definitionOfDone, String acceptanceCriteria) {
-        super(id, title, createDate, keywords, description, assignee, complexity, depending, status, BacklogItemType.USER_STORY);
+//    public UserStory(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, ArrayList<String> subtasks, String definitionOfDone, String acceptanceCriteria) {
+//        super(id, title, createDate, keywords, description, assignee, complexity, depending, status, BacklogItemType.USER_STORY);
+//        this.subtasks = subtasks;
+//        this.definitionOfDone = definitionOfDone;
+//        this.acceptanceCriteria = acceptanceCriteria;
+//    }
+
+
+    public UserStory(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, List<CheckList> checkList, ArrayList<String> subtasks, String definitionOfDone, String acceptanceCriteria) {
+        super(id, title, createDate, keywords, description, assignee, complexity, depending, status, BacklogItemType.USER_STORY, checkList);
         this.subtasks = subtasks;
         this.definitionOfDone = definitionOfDone;
         this.acceptanceCriteria = acceptanceCriteria;
