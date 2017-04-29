@@ -5,6 +5,8 @@ import hu.bme.msc.agiletool.repository.BugRepository;
 import hu.bme.msc.agiletool.repository.TaskRepository;
 import hu.bme.msc.agiletool.repository.UserStoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,4 +86,10 @@ public class BacklogItemController {
         }
     }
 
+
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    @ResponseBody
+    ResponseEntity errorPAth() {
+        return new ResponseEntity<>("Got some error.", HttpStatus.BAD_REQUEST);
+    }
 }

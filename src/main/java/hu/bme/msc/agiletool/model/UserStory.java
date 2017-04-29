@@ -9,8 +9,8 @@ import java.util.List;
 public class UserStory extends BacklogItem {
 
     private ArrayList<String> subtasks;
-    private String definitionOfDone;
-    private String acceptanceCriteria;
+    private List<CheckList> definitionOfDone;
+    private List<CheckList> acceptanceCriteria;
 
     public UserStory() {
     }
@@ -23,7 +23,7 @@ public class UserStory extends BacklogItem {
 //    }
 
 
-    public UserStory(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, List<CheckList> checkList, ArrayList<String> subtasks, String definitionOfDone, String acceptanceCriteria) {
+    public UserStory(String id, String title, Date createDate, ArrayList<String> keywords, String description, ArrayList<String> assignee, Complexity complexity, ArrayList<String> depending, BacklogStatus status, List<CheckList> checkList, ArrayList<String> subtasks, List<CheckList> definitionOfDone, List<CheckList> acceptanceCriteria) {
         super(id, title, createDate, keywords, description, assignee, complexity, depending, status, BacklogItemType.USER_STORY, checkList);
         this.subtasks = subtasks;
         this.definitionOfDone = definitionOfDone;
@@ -38,19 +38,19 @@ public class UserStory extends BacklogItem {
         this.subtasks = subtasks;
     }
 
-    public String getDefinitionOfDone() {
+    public List<CheckList> getDefinitionOfDone() {
         return definitionOfDone;
     }
 
-    public void setDefinitionOfDone(String definitionOfDone) {
+    public void setDefinitionOfDone(List<CheckList> definitionOfDone) {
         this.definitionOfDone = definitionOfDone;
     }
 
-    public String getAcceptanceCriteria() {
+    public List<CheckList> getAcceptanceCriteria() {
         return acceptanceCriteria;
     }
 
-    public void setAcceptanceCriteria(String acceptanceCriteria) {
+    public void setAcceptanceCriteria(List<CheckList> acceptanceCriteria) {
         this.acceptanceCriteria = acceptanceCriteria;
     }
 }
