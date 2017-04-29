@@ -24,7 +24,9 @@ public class FacebookConnectionSignup implements ConnectionSignUp {
         user.addRole("USER", "PO");
         user.setPassword("abcd");
 
-        userRepository.save(user);
+        if (userRepository.findByUsername(user.getUsername()) == null){
+            userRepository.save(user);
+        }
         return user.getUsername();
     }
 }

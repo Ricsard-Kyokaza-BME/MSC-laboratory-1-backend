@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,40 +17,40 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BacklogItemController {
 
-    @Autowired
-    private BugRepository bugRepository;
-    @Autowired
-    private TaskRepository taskRepository;
-    @Autowired
-    private UserStoryRepository userStoryRepository;
-
-    @RequestMapping(value = "/backlog-item", method = RequestMethod.GET)
-    @PreAuthorize("hasAnyAuthority('PO','USER')")
-    @ResponseBody
-    Map<String, List> getAllBacklogItem() {
-        Map<String, List> allItem = new HashMap<>();
-        allItem.put("userStory", userStoryRepository.findAll());
-        allItem.put("task", taskRepository.findAll());
-        allItem.put("bug", bugRepository.findAll());
-        return allItem;
-    }
-
-    @RequestMapping(value = "/backlog-item/by-status", method = RequestMethod.GET)
-    @PreAuthorize("hasAnyAuthority('PO','USER')")
-    @ResponseBody
-    Map<String, Map<String, List<BacklogItem>>> getBacklogItemsByStatus() {
-        Map<String, Map<String, List<BacklogItem>>> allItem = new HashMap<>();
-        mapByStatus(userStoryRepository.findAll(), allItem, "userStory");
-        mapByStatus(taskRepository.findAll(), allItem, "task");
-        mapByStatus(bugRepository.findAll(), allItem, "bug");
-
-        return allItem;
-    }
-
+//    @Autowired
+//    private BugRepository bugRepository;
+//    @Autowired
+//    private TaskRepository taskRepository;
+//    @Autowired
+//    private UserStoryRepository userStoryRepository;
+//
+//    @RequestMapping(value = "/backlog-item", method = RequestMethod.GET)
+//    @PreAuthorize("hasAnyAuthority('PO','USER')")
+//    @ResponseBody
+//    Map<String, List> getAllBacklogItem() {
+//        Map<String, List> allItem = new HashMap<>();
+//        allItem.put("userStory", userStoryRepository.findAll());
+//        allItem.put("task", taskRepository.findAll());
+//        allItem.put("bug", bugRepository.findAll());
+//        return allItem;
+//    }
+//
+//    @RequestMapping(value = "/backlog-item/by-status", method = RequestMethod.GET)
+//    @PreAuthorize("hasAnyAuthority('PO','USER')")
+//    @ResponseBody
+//    Map<String, Map<String, List<BacklogItem>>> getBacklogItemsByStatus() {
+//        Map<String, Map<String, List<BacklogItem>>> allItem = new HashMap<>();
+//        mapByStatus(userStoryRepository.findAll(), allItem, "userStory");
+//        mapByStatus(taskRepository.findAll(), allItem, "task");
+//        mapByStatus(bugRepository.findAll(), allItem, "bug");
+//
+//        return allItem;
+//    }
+//
     public static void mapByStatus(List<? extends BacklogItem> items,
                                    Map<String, Map<String, List<BacklogItem>>> target,
                                    String subTarget) {
@@ -84,12 +81,5 @@ public class BacklogItemController {
 
             target.put(subTarget, subMap);
         }
-    }
-
-
-    @RequestMapping(value = "/error", method = RequestMethod.GET)
-    @ResponseBody
-    ResponseEntity errorPAth() {
-        return new ResponseEntity<>("Got some error.", HttpStatus.BAD_REQUEST);
     }
 }
