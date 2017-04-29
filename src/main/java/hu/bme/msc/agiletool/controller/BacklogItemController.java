@@ -21,36 +21,24 @@ import java.util.Map;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BacklogItemController {
 
-//    @Autowired
-//    private BugRepository bugRepository;
-//    @Autowired
-//    private TaskRepository taskRepository;
-//    @Autowired
-//    private UserStoryRepository userStoryRepository;
-//
-//    @RequestMapping(value = "/backlog-item", method = RequestMethod.GET)
-//    @PreAuthorize("hasAnyAuthority('PO','USER')")
-//    @ResponseBody
-//    Map<String, List> getAllBacklogItem() {
-//        Map<String, List> allItem = new HashMap<>();
-//        allItem.put("userStory", userStoryRepository.findAll());
-//        allItem.put("task", taskRepository.findAll());
-//        allItem.put("bug", bugRepository.findAll());
-//        return allItem;
-//    }
-//
-//    @RequestMapping(value = "/backlog-item/by-status", method = RequestMethod.GET)
-//    @PreAuthorize("hasAnyAuthority('PO','USER')")
-//    @ResponseBody
-//    Map<String, Map<String, List<BacklogItem>>> getBacklogItemsByStatus() {
-//        Map<String, Map<String, List<BacklogItem>>> allItem = new HashMap<>();
-//        mapByStatus(userStoryRepository.findAll(), allItem, "userStory");
-//        mapByStatus(taskRepository.findAll(), allItem, "task");
-//        mapByStatus(bugRepository.findAll(), allItem, "bug");
-//
-//        return allItem;
-//    }
-//
+    @Autowired
+    private BugRepository bugRepository;
+    @Autowired
+    private TaskRepository taskRepository;
+    @Autowired
+    private UserStoryRepository userStoryRepository;
+
+    @RequestMapping(value = "/backlog-item", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('PO','USER')")
+    @ResponseBody
+    Map<String, List> getAllBacklogItem() {
+        Map<String, List> allItem = new HashMap<>();
+        allItem.put("userStory", userStoryRepository.findAll());
+        allItem.put("task", taskRepository.findAll());
+        allItem.put("bug", bugRepository.findAll());
+        return allItem;
+    }
+
     public static void mapByStatus(List<? extends BacklogItem> items,
                                    Map<String, Map<String, List<BacklogItem>>> target,
                                    String subTarget) {
