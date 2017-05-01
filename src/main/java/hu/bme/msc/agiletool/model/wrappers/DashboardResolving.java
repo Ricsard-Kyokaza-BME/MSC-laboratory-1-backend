@@ -4,7 +4,6 @@ import hu.bme.msc.agiletool.model.BacklogItem;
 import hu.bme.msc.agiletool.model.Sprint;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DashboardResolving {
 

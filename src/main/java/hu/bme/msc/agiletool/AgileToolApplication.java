@@ -1,17 +1,8 @@
 package hu.bme.msc.agiletool;
 
-import hu.bme.msc.agiletool.model.User;
-import hu.bme.msc.agiletool.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class AgileToolApplication extends SpringBootServletInitializer {
