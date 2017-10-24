@@ -131,6 +131,7 @@ public class DashboardController implements PredefineBaseController {
             putBacklogItemToDashboard(jObjBacklogItem, dashboard, bug, bugRawObject);
         } else {
             return null;
+            
         }
 
         dashboard = dashboardRepository.save(dashboard);
