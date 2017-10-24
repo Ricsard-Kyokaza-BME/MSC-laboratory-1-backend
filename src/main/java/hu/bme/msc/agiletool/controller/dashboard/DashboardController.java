@@ -114,17 +114,17 @@ public class DashboardController implements PredefineBaseController {
 
     private Dashboard putItemToDashboard(JSONObject jObjBacklogItem, String backlogItem, Dashboard dashboard) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        if (jObjBacklogItem.get("type").toString().equals("0")) {
+        if (jObjBacklogItem.get("type").toString().equals("0") || jObjBacklogItem.get("type").toString().equals("USER_STORY")) {
             UserStory userStoryRawObject = mapper.readValue(backlogItem, UserStory.class);
             UserStory userStory = userStoryRepository.save(userStoryRawObject);
 
             putBacklogItemToDashboard(jObjBacklogItem, dashboard, userStory, userStoryRawObject);
-        } else if (jObjBacklogItem.get("type").toString().equals("1")) {
+        } else if (jObjBacklogItem.get("type").toString().equals("1") || jObjBacklogItem.get("type").toString().equals("TASK")) {
             Task taskRawObject = mapper.readValue(backlogItem, Task.class);
             Task task = taskRepository.save(taskRawObject);
 
             putBacklogItemToDashboard(jObjBacklogItem, dashboard, task, taskRawObject);
-        } else if (jObjBacklogItem.get("type").toString().equals("2")) {
+        } else if (jObjBacklogItem.get("type").toString().equals("2") || jObjBacklogItem.get("type").toString().equals("BUG")) {
             Bug bugRawObject = mapper.readValue(backlogItem, Bug.class);
             Bug bug = bugRepository.save(bugRawObject);
 
